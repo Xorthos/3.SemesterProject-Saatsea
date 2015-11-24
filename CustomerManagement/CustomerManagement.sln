@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerManagement", "CustomerManagement\CustomerManagement.csproj", "{362E48CF-7D10-4ED7-B96E-DA723C07BA7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy", "Proxy\Proxy.csproj", "{DD2B9D8D-66B8-49CE-96B3-C228F50F120C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{362E48CF-7D10-4ED7-B96E-DA723C07BA7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{362E48CF-7D10-4ED7-B96E-DA723C07BA7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{362E48CF-7D10-4ED7-B96E-DA723C07BA7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{362E48CF-7D10-4ED7-B96E-DA723C07BA7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD2B9D8D-66B8-49CE-96B3-C228F50F120C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD2B9D8D-66B8-49CE-96B3-C228F50F120C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD2B9D8D-66B8-49CE-96B3-C228F50F120C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD2B9D8D-66B8-49CE-96B3-C228F50F120C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
