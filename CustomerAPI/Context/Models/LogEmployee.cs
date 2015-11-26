@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Context.Models
 {
-    class LogEmployee
+  public class LogEmployee
     {
+        public int LogID { get; set; }
+
+        public int EmployeeID { get; set; }
     }
 }
