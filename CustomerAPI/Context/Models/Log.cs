@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Context.Models
 {
-    class Log
+  public class Log
     {
+        public int ID { get; set; }
+        public int CompanyID { get; set; }
+        public DateTime Date { get; set; }
+        public bool Import { get; set; }
     }
 }
