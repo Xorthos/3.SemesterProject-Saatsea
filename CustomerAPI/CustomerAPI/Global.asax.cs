@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Context.Seed;
 
 namespace CustomerAPI
 {
@@ -13,6 +14,9 @@ namespace CustomerAPI
     {
         protected void Application_Start()
         {
+            //This will initialize the database.
+            Initializor.Initalize();
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
