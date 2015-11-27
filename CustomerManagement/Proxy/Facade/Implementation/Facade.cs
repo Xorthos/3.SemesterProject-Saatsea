@@ -10,7 +10,7 @@ using Proxy.ServiceGateway.Implementation;
 
 namespace Proxy.Facade.Implementation
 {
-    public class FacadeMOCK : IFacade
+    public class Facade : IFacade
     {
         public ServiceGateway<Company> GetCompanyGateway()
         {
