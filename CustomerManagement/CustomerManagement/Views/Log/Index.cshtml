@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Proxy.Models.Log>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Logs</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Company.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employees.Count)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Import)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Company.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employees.Count)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Import)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "LogDetails", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -56,7 +56,6 @@
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Log.cs" />
-    <Compile Include="Models\LogEmployee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Abstraction\IRepository.cs" />
     <Compile Include="Repositories\Implementation\CompanyRepository.cs" />
