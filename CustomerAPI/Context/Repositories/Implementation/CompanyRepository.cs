@@ -4,8 +4,8 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Context.Models;
-using Context.Repositories.Abstraction;
+using DAL.Models;
+using DAL.Repositories.Abstraction;
 using Context = DAL.Context.Context;
 
 namespace DAL.Context.Repositories.Implementation
@@ -21,9 +21,13 @@ namespace DAL.Context.Repositories.Implementation
         {
             using (var ctx = new DAL.Context.Context())
             {
-                foreach (var empl in item.Employees)
+                // I need to see if this is necessary
+                if (item.Employees != null)
                 {
-                    ctx.Employees.Attach(empl);
+                    foreach (var empl in item.Employees)
+                    {
+                        ctx.Employees.Attach(empl);
+                    }
                 }
 
                 var result = ctx.Companies.Add(item);
@@ -41,8 +45,7 @@ namespace DAL.Context.Repositories.Implementation
         {
             using (var ctx = new DAL.Context.Context())
             {
-                IEnumerable<Company> result = ctx.Companies.Include("Employee").ToList();
-                return result;
+                return ctx.Companies.Include("Employees").ToList();
             }
         }
 
@@ -55,8 +58,7 @@ namespace DAL.Context.Repositories.Implementation
         {
             using (var ctx = new DAL.Context.Context())
             {
-                var result = ctx.Companies.Where(c=> c.ID == id).Include("Employee").FirstOrDefault();
-                return result;
+                return ctx.Companies.Include("Employees").FirstOrDefault(c => c.ID == id);
             }
         }
 
@@ -82,13 +84,30 @@ namespace DAL.Context.Repositories.Implementation
                 result.Name = item.Name;
                 result.PhoneNr = item.PhoneNr;
                 result.Zipcode = item.Zipcode;
+
+                ctx.SaveChanges();
                 return true;
             }
         }
 
+        /// <summary>
+        /// will deactivate an item
+        /// </summary>
+        /// <param name="item">the item to be deactivated</param>
+        /// <returns>true if the item was successfully deactivated</returns>
         public bool DeActivate(Company item)
         {
-            throw new NotImplementedException();
+            using (var ctx = new Context())
+            {
+                var result = ctx.Entry(item).Entity;
+                if (result == null)
+                {
+                    return false;
+                }
+
+                ctx.SaveChanges();
+                return true;
+            }
         }
     }
 }

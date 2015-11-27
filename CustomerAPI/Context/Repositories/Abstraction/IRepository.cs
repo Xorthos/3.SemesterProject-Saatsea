@@ -5,7 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Context.Repositories.Abstraction
+namespace DAL.Repositories.Abstraction
 {
     public interface IRepository<T>
     {

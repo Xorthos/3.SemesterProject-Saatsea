@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Context.Models
+namespace DAL.Models
 {
     public class Company
     {
@@ -14,6 +14,6 @@ namespace Context.Models
         public int Zipcode { get; set; }
         public string Email { get; set; }
         public string PhoneNr { get; set; }
-        public List<Employee> Employees { get; set; }
+        public virtual List<Employee> Employees { get; set; }
     }
 }

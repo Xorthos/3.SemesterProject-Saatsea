@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Context.Seed
+namespace DAL.Seed
 {
     class Initializer : DropCreateDatabaseAlways<DAL.Context.Context>
     {

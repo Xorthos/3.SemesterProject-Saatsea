@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Context.Models
+namespace DAL.Models
 {
   public class Employee
     {
         public int ID { get; set; }
         public string Name { get; set; }
         public int CompanyID { get; set; }
-        public List<Log> Logs { get; set; }
+        public virtual List<Log> Logs { get; set; }
     }
 }

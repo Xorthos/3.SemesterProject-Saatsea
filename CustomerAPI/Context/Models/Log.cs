@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Context.Models
+namespace DAL.Models
 {
   public class Log
     {
@@ -12,6 +12,6 @@ namespace Context.Models
         public int CompanyID { get; set; }
         public DateTime Date { get; set; }
         public bool Import { get; set; }
-        public List<Employee> Employees { get; set; }
+        public virtual List<Employee> Employees { get; set; }
     }
 }
