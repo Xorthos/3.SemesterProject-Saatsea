@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Context.Models
+namespace DALTest.ModelsTest
 {
-  public class LogEmployee
+    class LogTest
     {
-        public int LogID { get; set; }
 
-        public int EmployeeID { get; set; }
     }
 }
