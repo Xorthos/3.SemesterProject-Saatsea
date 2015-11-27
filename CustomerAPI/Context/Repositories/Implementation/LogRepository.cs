@@ -29,7 +29,7 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new DAL.Context.Context())
             {
-                return ctx.Logs.Include("Employee").ToList();
+                return ctx.Logs.Include("Employee").Where(c=> c.Active).ToList();
             }
         }
 
@@ -37,7 +37,7 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new DAL.Context.Context())
             {
-                return ctx.Logs.Where(c => c.ID == id).FirstOrDefault();
+                return ctx.Logs.FirstOrDefault(c => c.ID == id && c.Active);
             }
         }
 
@@ -51,7 +51,7 @@ namespace DAL.Repositories.Implementation
                     return false;
 
                 result.Employees = item.Employees;
-                result.CompanyID = item.CompanyID;
+                result.Company = item.Company;
                 result.Date = item.Date;
                 result.Import = item.Import;
 
@@ -69,6 +69,7 @@ namespace DAL.Repositories.Implementation
                 if (result == null)
                     return false;
 
+                result.Active = false;
                 ctx.SaveChanges();
                 return true;
             }

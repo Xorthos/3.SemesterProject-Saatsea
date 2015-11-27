@@ -19,7 +19,7 @@ namespace DAL.Context.Repositories.Implementation
         /// <returns>The same company but now with a primary key.</returns>
         public Company Add(Company item)
         {
-            using (var ctx = new DAL.Context.Context())
+            using (var ctx = new Context())
             {
                 // I need to see if this is necessary
                 if (item.Employees != null)
@@ -45,7 +45,7 @@ namespace DAL.Context.Repositories.Implementation
         {
             using (var ctx = new DAL.Context.Context())
             {
-                return ctx.Companies.Include("Employees").ToList();
+                return ctx.Companies.Include("Employees").Where(c=> c.Active).ToList();
             }
         }
 
@@ -58,7 +58,7 @@ namespace DAL.Context.Repositories.Implementation
         {
             using (var ctx = new DAL.Context.Context())
             {
-                return ctx.Companies.Include("Employees").FirstOrDefault(c => c.ID == id);
+                return ctx.Companies.Include("Employees").FirstOrDefault(c => c.ID == id && c.Active);
             }
         }
 
@@ -105,6 +105,7 @@ namespace DAL.Context.Repositories.Implementation
                     return false;
                 }
 
+                result.Active = false;
                 ctx.SaveChanges();
                 return true;
             }
