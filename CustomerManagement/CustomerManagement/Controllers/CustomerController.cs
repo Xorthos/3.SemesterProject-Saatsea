@@ -6,14 +6,10 @@ using System.Web.Mvc;
 
 namespace CustomerManagement.Controllers
 {
-    public class HomeController : Controller
+    public class CustomerController : Controller
     {
+        // GET: Customer
         public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult ManageCustomers()
         {
             return View();
         }
