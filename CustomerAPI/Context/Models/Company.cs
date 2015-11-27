@@ -16,5 +16,8 @@ namespace Context.Models
         public string Address { get; set; }
         public string Email { get; set; }
         public string PhoneNr { get; set; }
+        public List<Employee> Employees {get; set; }
     }
+
+    
 }
