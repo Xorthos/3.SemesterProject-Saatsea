@@ -21,7 +21,7 @@ namespace CustomerAPI.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("SaatSea")
+            : base("SaatSea", throwIfV1Schema: false)
         {
         }
         

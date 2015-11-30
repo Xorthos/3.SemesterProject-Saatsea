@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DAL.Context
 {
-    public class Context : DbContext
+    public class Context : IdentityDbContext
     {
         #region constants
 

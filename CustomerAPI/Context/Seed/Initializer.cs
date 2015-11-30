@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace DAL.Seed
 {
-    class Initializer : DropCreateDatabaseAlways<DAL.Context.Context>
+    class Initializer : DropCreateDatabaseAlways<Context.Context>
     {
+        public Initializer()
+        {
+            InitializeDatabase(new Context.Context());
+        }
         public override void InitializeDatabase(DAL.Context.Context context)
         {
             
