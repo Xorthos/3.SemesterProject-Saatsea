@@ -21,7 +21,7 @@ namespace CustomerAPI.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("SaatSea", throwIfV1Schema: false)
         {
         }
         

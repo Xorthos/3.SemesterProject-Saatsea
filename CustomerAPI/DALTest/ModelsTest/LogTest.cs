@@ -1,13 +1,12 @@
-﻿using Context.Models;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DAL.Models;
+using NUnit.Core;
+
 
 namespace DALTest.ModelsTest
-{   
+{
+
     [TestFixture]
     class LogTest
     {   
@@ -19,7 +18,7 @@ namespace DALTest.ModelsTest
                 Id = 1,
                 Name = "Big Company",
                 Zipcode = 6700,
-                Address = "Test Street 7",
+                //Address = "Test Street 7",
                 Email = "something@gmail.com",
                 PhoneNr = "12345678",
                 Active = true,
