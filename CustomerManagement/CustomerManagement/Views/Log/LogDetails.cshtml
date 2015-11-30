@@ -4,18 +4,18 @@
     ViewBag.Title = "LogDetails";
 }
 
-<h2>LogDetails</h2>
+<h2>Details</h2>
 
 <div>
     <h4>Log</h4>
-    <hr />
-    <dl class="dl-horizontal">
+    <hr/>
+    <dl class="dl-table">
         <dt>
-            @Html.DisplayNameFor(model => model.Company.Name)
+            @Html.DisplayNameFor(model => model.ID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Company.Name)
+            @Html.DisplayFor(model => model.ID)
         </dd>
 
         <dt>
@@ -27,14 +27,62 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Import)
+            @Html.DisplayNameFor(model => model.Company.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Import)
+            @Html.DisplayFor(model => model.Company.Name)
+        </dd>
+
+        <dt>
+            Type
+        </dt>
+
+        <dd>
+            @{
+                string text;
+                if (Model.Import)
+                {
+                    text = "Import";
+                }
+                else
+                {
+                    text = "Export";
+                }
+            }
+            @text
+
         </dd>
 
     </dl>
+</div>
+
+<div>
+    <h4>Employees</h4>
+    <table class="table">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Employees)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            </tr>
+        }
+
+    </table>
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index")

@@ -10,7 +10,7 @@ namespace CustomerManagement.Controllers
 {
     public class LogController : Controller
     {
-        IFacade facade = new FacadeMOCK();
+        IFacade facade = new Facade();
         public ActionResult Index()
         {
             return View(facade.GetLogGateway().GetAll());
