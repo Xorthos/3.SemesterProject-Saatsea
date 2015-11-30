@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-  public class Employee
+    public class Employee
     {
         public string FirstName { get; set; }
         public string Country { get; set; }
@@ -33,5 +33,7 @@ namespace DAL.Models
         {
             return Convert.ToInt32(Id);
         }
+
         public virtual List<Log> Logs { get; set; }
+    }
 }

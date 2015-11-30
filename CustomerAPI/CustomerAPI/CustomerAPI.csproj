@@ -295,7 +295,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Context\DAL.csproj">
+    <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{A26FE1EF-47DD-449B-A5CC-CFE77EBE6725}</Project>
       <Name>DAL</Name>
     </ProjectReference>

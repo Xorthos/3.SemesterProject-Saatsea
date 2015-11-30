@@ -27,7 +27,7 @@ namespace DALTest.ModelsTest
             Employee emp = new Employee()
             {
                 Id = 1,
-                Name = "First Employee",
+                FirstName = "First Employee",
                 Company = comp,
 
             };

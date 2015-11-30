@@ -52,7 +52,7 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new Context.Context())
             {
-                return ctx.Employees.Include("Logs").FirstOrDefault(c => c.ID == id && c.Active);
+                return ctx.Employees.Include("Logs").FirstOrDefault(c => c.Id == id && c.Active);
             }
         }
 
@@ -72,7 +72,7 @@ namespace DAL.Repositories.Implementation
 
                 result.Logs = item.Logs;
                 result.Company = item.Company;
-                result.Name = item.Name;
+                result.FirstName = item.FirstName;
 
                 ctx.SaveChanges();
                 return true;

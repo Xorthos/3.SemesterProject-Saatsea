@@ -58,7 +58,7 @@ namespace DAL.Context.Repositories.Implementation
         {
             using (var ctx = new DAL.Context.Context())
             {
-                return ctx.Companies.Include("Employees").FirstOrDefault(c => c.ID == id && c.Active);
+                return ctx.Companies.Include("Employees").FirstOrDefault(c => c.Id == id && c.Active);
             }
         }
 

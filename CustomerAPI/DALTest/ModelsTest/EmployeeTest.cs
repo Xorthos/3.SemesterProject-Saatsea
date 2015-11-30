@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Context.Models;
+using DAL.Models;
 
 namespace DALTest.ModelsTest
 {
@@ -24,7 +24,6 @@ namespace DALTest.ModelsTest
                 Id = 1,
                 Name = "Big Company",
                 Zipcode = 6700,
-                Address = "Test Street 7",
                 Email = "something@gmail.com",
                 PhoneNr = "12345678",
                 Active = true,
