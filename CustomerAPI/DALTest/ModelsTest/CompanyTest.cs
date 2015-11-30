@@ -21,45 +21,63 @@ namespace DALTest.ModelsTest
             List<Employee> employees = new List<Employee>();
             Employee emp1 = new Employee()
             {
-                ID = 1,
+                Id = 1,
                 Name = "First Employee",
-                CompanyID = 1
+                 
             };
             Employee emp2 = new Employee()
             {
-                ID = 1,
+                Id = 1,
                 Name = "First Employee",
-                CompanyID = 1
+                
             };
             employees.Add(emp1);
-            employees.Add(emp2);
+            employees.Add(emp2); 
 
 
             Company comp = new Company() {
-                ID = 1,
+                Id = 1,
                 Name = "Big Company",
                 Zipcode =6700,
                 Address = "Test Street 7",
                 Email= "something@gmail.com",
                 PhoneNr = "12345678",
                 Employees = employees,
+                Active = true,
 
-        };
+            };
 
-            Assert.AreEqual(comp.ID, 1);
+            Assert.AreEqual(comp.Id, 1);
             Assert.AreEqual(comp.Name, "Big Company");
             Assert.AreEqual(comp.Zipcode, 6700);
             Assert.AreEqual(comp.Address, "Test Street 7");
             Assert.AreEqual(comp.Email,"something@gmail.com");
             Assert.AreEqual(comp.PhoneNr, "12345678");
             Assert.AreEqual(comp.Employees, employees);
+            Assert.AreEqual(comp.Active,true);
         }
 
         [Test]
-        public void Test()
+
+        public void Company_With_The_Same_Id_Should_Be_Equal_Test()
         {
-            Assert.AreNotEqual(1,3);
-    }
+            Company comp1 = new Company { Id = 1};
+            Company comp2 = new Company {Id =1};
+
+            Assert.AreEqual(comp1,comp2);
+            Assert.AreEqual(comp1.GetHashCode(),comp2.GetHashCode());
+        }
+
+        [Test]
+        public void Company_With_Different_Id_Should_Be_Unequal_And_Have_Different_HashCode_Test()
+        {
+            Company comp1 = new Company { Id = 1 };
+            Company comp2 = new Company { Id = 2 };
+            Assert.AreNotEqual(comp1,comp2);
+            Assert.AreNotEqual(comp1.GetHashCode(),comp2.GetHashCode());
+        }
+
+
 
     }
  
