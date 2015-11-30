@@ -32,6 +32,8 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -57,11 +59,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\AuthorizeHttpClient.cs" />
     <Compile Include="Facade\Abstraction\IFacade.cs" />
     <Compile Include="Facade\Implementation\Facade.cs" />
+    <Compile Include="Models\AuthorizationModels\LoggedInModel.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Log.cs" />
+    <Compile Include="Models\AuthorizationModels\LoginModel.cs" />
+    <Compile Include="Models\AuthorizationModels\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceGateway\Abstraction\ServiceGateway.cs" />
     <Compile Include="ServiceGateway\Implementation\CompanyGateway.cs" />

@@ -82,7 +82,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Context\Context.csproj">
+    <ProjectReference Include="..\Context\DAL.csproj">
       <Project>{a26fe1ef-47dd-449b-a5cc-cfe77ebe6725}</Project>
       <Name>Context</Name>
     </ProjectReference>

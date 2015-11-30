@@ -49,6 +49,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -171,6 +175,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -234,8 +239,13 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Log\Index.cshtml" />
     <Content Include="Views\Log\LogDetails.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\Create.cshtml" />
+=======
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Test\Register.cshtml" />
+>>>>>>> cc38d994e43e6ba03a3de0dc94c22f9669db2ad6
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

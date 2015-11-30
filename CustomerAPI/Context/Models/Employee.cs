@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Context.Models
+namespace DAL.Models
 {
   public class Employee
     {
@@ -33,5 +33,5 @@ namespace Context.Models
         {
             return Convert.ToInt32(Id);
         }
-    }
+        public virtual List<Log> Logs { get; set; }
 }
