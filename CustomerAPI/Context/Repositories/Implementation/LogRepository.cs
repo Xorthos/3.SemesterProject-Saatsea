@@ -37,7 +37,7 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new DAL.Context.Context())
             {
-                return ctx.Logs.FirstOrDefault(c => c.ID == id && c.Active);
+                return ctx.Logs.FirstOrDefault(c => c.Id == id && c.Active);
             }
         }
 
