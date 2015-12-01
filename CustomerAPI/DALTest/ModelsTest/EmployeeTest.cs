@@ -2,6 +2,7 @@
 using DAL.Models;
 using NUnit.Framework;
 using DAL.Models;
+using System.Collections.Generic;
 
 namespace DALTest.ModelsTest
 {
@@ -26,6 +27,26 @@ namespace DALTest.ModelsTest
                 Active = true,
 
             };
+
+            List<Log> logs = new List<Log>();
+            Log log = new Log()
+            {
+                Id = 1,
+                Company = comp,
+                Date = DateTime.Now.Date,
+                Import = true,
+
+            };
+            Log log2 = new Log()
+            {
+                Id = 1,
+                Company = comp,
+                Date = DateTime.Now.Date,
+                Import = false,
+
+            };
+            logs.Add(log);
+            logs.Add(log2);
             Employee emp = new Employee()
             {
                 Id = 1,
@@ -39,8 +60,11 @@ namespace DALTest.ModelsTest
                 Rank = "Captain",
                 Phone = "1111111",
                 Company = comp,
-                Active =true
+                Active =true,
+                Logs = logs
+                
             };
+
 
             Assert.AreEqual(emp.Id, 1);
             Assert.AreEqual(emp.FirstName, "First ");
@@ -53,6 +77,8 @@ namespace DALTest.ModelsTest
             Assert.AreEqual(emp.Phone,"1111111");
             Assert.AreEqual(emp.Company, comp);
             Assert.IsTrue(emp.Active);
+            Assert.AreEqual(emp.Logs, logs);
+
         }
 
         [Test]
