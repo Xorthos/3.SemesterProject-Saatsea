@@ -1,6 +1,7 @@
 ﻿using System;
 using DAL.Models;
 using NUnit.Framework;
+using DAL.Models;
 
 namespace DALTest.ModelsTest
 {
@@ -20,7 +21,6 @@ namespace DALTest.ModelsTest
                 Id = 1,
                 Name = "Big Company",
                 Zipcode = 6700,
-                //Address = "Test Street 7",
                 Email = "something@gmail.com",
                 PhoneNr = "12345678",
                 Active = true,
@@ -48,7 +48,6 @@ namespace DALTest.ModelsTest
             Assert.AreEqual(emp.Country, "Denmark");
             Assert.AreEqual(emp.ZipCode, 6700);
             Assert.AreEqual(emp.City, "Esbjerg");
-            //Assert.AreEqual(emp.Address, "This Vej 7");
             Assert.AreEqual(emp.BirthDate, DateTime.Now.Date);
             Assert.AreEqual(emp.Rank, "Captain");
             Assert.AreEqual(emp.Phone,"1111111");

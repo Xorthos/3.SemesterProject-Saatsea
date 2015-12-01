@@ -72,7 +72,7 @@ namespace DAL.Repositories.Implementation
 
                 result.Logs = item.Logs;
                 result.Company = item.Company;
-                result.Name = item.Name;
+                result.FirstName = item.FirstName;
 
                 ctx.SaveChanges();
                 return true;

@@ -23,15 +23,25 @@ namespace Proxy.ServiceGateway.Implementation
 
         public override Employee Get(int id)
         {
-            return MOCKData.employees.FirstOrDefault(em => em.ID == id);
+            return MOCKData.employees.FirstOrDefault(em => em.Id == id);
         }
 
         public override bool Update(Employee item)
         {
-            Employee emp = MOCKData.employees.FirstOrDefault(em => em.ID == item.ID);
-            emp.ID = item.ID;
+            Employee emp = MOCKData.employees.FirstOrDefault(em => em.Id== item.Id);
+            emp.Id = item.Id;
             emp.Company = item.Company;
-            emp.Name = item.Name;
+            emp.Active = item.Active;
+            emp.Address = item.Address;
+            emp.BirthDate = item.BirthDate;
+            emp.City = item.City;
+            emp.Country = item.Country;
+            emp.CprNumber = item.CprNumber;
+            emp.FirstName = item.FirstName;
+            emp.LastName = item.LastName;
+            emp.Phone = item.Phone;
+            emp.Rank = item.Rank;
+            emp.ZipCode = item.ZipCode;
             return true;
         }
     }

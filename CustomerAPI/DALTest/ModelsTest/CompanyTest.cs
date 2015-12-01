@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using DAL.Models;
 using NUnit.Framework;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
@@ -19,13 +23,13 @@ namespace DALTest.ModelsTest
             Employee emp1 = new Employee()
             {
                 Id = 1,
-                Name = "First Employee",
+                FirstName = "First Employee",
                  
             };
             Employee emp2 = new Employee()
             {
                 Id = 1,
-                Name = "First Employee",
+                FirstName = "First Employee",
                 
             };
             employees.Add(emp1);
@@ -36,7 +40,6 @@ namespace DALTest.ModelsTest
                 Id = 1,
                 Name = "Big Company",
                 Zipcode =6700,
-                //Address = "Test Street 7",
                 Email= "something@gmail.com",
                 PhoneNr = "12345678",
                 Employees = employees,
@@ -47,7 +50,6 @@ namespace DALTest.ModelsTest
             Assert.AreEqual(comp.Id, 1);
             Assert.AreEqual(comp.Name, "Big Company");
             Assert.AreEqual(comp.Zipcode, 6700);
-            //Assert.AreEqual(comp.Address, "Test Street 7");
             Assert.AreEqual(comp.Email,"something@gmail.com");
             Assert.AreEqual(comp.PhoneNr, "12345678");
             Assert.AreEqual(comp.Employees, employees);
