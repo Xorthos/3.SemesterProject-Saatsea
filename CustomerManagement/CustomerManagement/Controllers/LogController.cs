@@ -8,6 +8,7 @@ using Proxy.Models;
 
 namespace CustomerManagement.Controllers
 {
+    
     public class LogController : Controller
     {
         IFacade facade = new Facade();

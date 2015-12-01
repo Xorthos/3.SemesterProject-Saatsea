@@ -13,6 +13,7 @@ using DAL.Repositories.Abstraction;
 
 namespace CustomerAPI.Controllers
 {
+    [Authorize]
     public class EmployeeController : ApiController
     {
         private IFacade facade;

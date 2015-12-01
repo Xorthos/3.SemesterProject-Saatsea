@@ -10,7 +10,7 @@ using CustomerManagement.Models;
 
 namespace CustomerManagement.Controllers
 {
-    [Authorize]
+    
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
