@@ -18,7 +18,7 @@
             @Html.DisplayNameFor(model => model.Employees.Count)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Import)
+            Import/Export
         </th>
         <th></th>
     </tr>
@@ -35,7 +35,15 @@
             @Html.DisplayFor(modelItem => item.Employees.Count)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Import)
+            @if (item.Import)
+            {
+                <p>Import</p>
+            }
+            else
+            {
+                <p>Export</p>
+            }
+
         </td>
         <td>
             @Html.ActionLink("Details", "LogDetails", new { id=item.ID })
