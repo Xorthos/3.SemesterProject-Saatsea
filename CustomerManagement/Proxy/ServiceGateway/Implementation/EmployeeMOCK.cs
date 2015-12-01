@@ -36,7 +36,6 @@ namespace Proxy.ServiceGateway.Implementation
             emp.BirthDate = item.BirthDate;
             emp.City = item.City;
             emp.Country = item.Country;
-            emp.CprNumber = item.CprNumber;
             emp.FirstName = item.FirstName;
             emp.LastName = item.LastName;
             emp.Phone = item.Phone;
