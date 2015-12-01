@@ -13,9 +13,9 @@ namespace CustomerManagement.Controllers
     public class TestController : Controller
     {
         // GET: Test
-        public ActionResult Index()
+        public void Index()
         {
-            return View();
+            
         }
 
         public ActionResult Register()
