@@ -21,7 +21,7 @@ namespace DAL.Models
         public int Id { get; set; }
         public virtual Company Company { get; set; }
         public bool Active { get; set; }
-        public string CprNumber { get; set; }
+       
 
 
         public override bool Equals(object emp)

@@ -2,7 +2,7 @@
 using System;
 using DAL.Models;
 using NUnit.Core;
-
+using System.Collections.Generic;
 
 namespace DALTest.ModelsTest
 {
@@ -12,7 +12,8 @@ namespace DALTest.ModelsTest
     {   
         [Test]
         public void Getters_And_Setters_Test()
-        {
+        {    
+
             Company comp = new Company()
             {
                 Id = 1,
@@ -24,26 +25,43 @@ namespace DALTest.ModelsTest
                 Active = true,
 
             };
-            Employee emp = new Employee()
+
+            List<Employee> employees = new List<Employee>();
+            Employee emp1 = new Employee()
             {
                 Id = 1,
                 FirstName = "First Employee",
-                Company = comp,
 
             };
-          
+            Employee emp2 = new Employee()
+            {
+                Id = 1,
+                FirstName = "First Employee",
+
+            };
+            employees.Add(emp1);
+            employees.Add(emp2);
+
+
+
             Log log = new Log()
             {
                 Id = 1,
-                Company= comp,
+                Company = comp,
                 Date = DateTime.Now.Date,
                 Import = true,
+                Employees = employees,
+                Active=true
+
 
             };
             Assert.AreEqual(log.Id, 1);
             Assert.AreEqual(log.Company, comp);
             Assert.AreEqual(log.Date, DateTime.Now.Date);
             Assert.AreEqual(log.Import, true);
+            Assert.AreEqual(log.Employees, employees);
+            Assert.AreEqual(log.Active, true);
+
         }
 
 
