@@ -74,7 +74,7 @@ namespace CustomerManagement.Controllers
                 return View(model);
             }
 
-            Proxy.Authorization.AuthorizeHttpClient.Login(new LoginModel()
+            Session["LoginModel"] = Proxy.Authorization.AuthorizeHttpClient.Login(new LoginModel()
             {
                 Email = model.Email,
                 Password = model.Password
@@ -154,7 +154,7 @@ namespace CustomerManagement.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Log");
                 }
                 AddErrors(result);
             }

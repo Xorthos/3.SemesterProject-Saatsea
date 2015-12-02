@@ -330,7 +330,6 @@ namespace CustomerAPI.Controllers
             }
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-            _userManager.
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
