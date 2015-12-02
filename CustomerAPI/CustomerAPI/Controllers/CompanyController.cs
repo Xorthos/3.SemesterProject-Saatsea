@@ -11,6 +11,7 @@ using DAL.Repositories.Abstraction;
 
 namespace CustomerAPI.Controllers
 {
+    [Authorize]
     public class CompanyController : ApiController
     {
         private IFacade facade;

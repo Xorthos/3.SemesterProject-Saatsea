@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Proxy.Models;
 using Proxy.Models.AuthorizationModels;
+using Proxy.ServiceGateway.Abstraction;
 
 namespace Proxy.Authorization
 {
@@ -28,7 +29,7 @@ namespace Proxy.Authorization
                 var content = JsonConvert.SerializeObject(model);
 
                 var request = new StringContent(content) {Headers = { ContentType = new MediaTypeWithQualityHeaderValue("application/json") } };
-                var respond = httpClient.PostAsync(new Uri("http://localhost:2687/api/Account/Register"), request).Result;
+                var respond = httpClient.PostAsync(new Uri(ServiceGateway<Object>.END_POINT + "Account/Register"), request).Result;
 
                 if (respond.StatusCode == HttpStatusCode.OK)
                     return Login(new LoginModel() {Email = model.Email, Password = model.Password});
@@ -54,7 +55,7 @@ namespace Proxy.Authorization
 
             using (var httpClient = new HttpClient())
             {
-                var request = httpClient.PostAsync("http://localhost:2687/Token", new FormUrlEncodedContent(content)).Result;
+                var request = httpClient.PostAsync(ServiceGateway<Object>.END_POINT.Replace("api/","") + "Token", new FormUrlEncodedContent(content)).Result;
                 dynamic result = JObject.Parse(request.Content.ReadAsStringAsync().Result);
 
                 if (request.StatusCode == HttpStatusCode.OK)
