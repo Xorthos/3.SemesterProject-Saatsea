@@ -9,13 +9,17 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DAL.Seed
 {
-    class Initializer : DropCreateDatabaseAlways<Context.Context>
+    public class Initializer : DropCreateDatabaseAlways<Context.Context>
     {
         public Initializer()
         {
             InitializeDatabase(new Context.Context());
         }
 
+        public static void Initalize()
+        {
+            Database.SetInitializer(new Initializer());
+        }
 
         public override void InitializeDatabase(DAL.Context.Context context)
         {
@@ -64,7 +68,6 @@ namespace DAL.Seed
             Log log6 = new Log() { Company = comp2, Employees = empList6, Date = DateTime.Now, Id = 6, Import = false };
             Log log7 = new Log() { Company = comp1, Employees = empList7, Date = DateTime.Now, Id = 7, Import = false };
             Log log8 = new Log() { Company = comp3, Employees = empList8, Date = DateTime.Now, Id = 8, Import = true };
-            
 
             base.InitializeDatabase(context);
         }

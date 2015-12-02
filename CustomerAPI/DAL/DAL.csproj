@@ -64,13 +64,13 @@
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Log.cs" />
+    <Compile Include="Models\SeedingModels\SeedingUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Abstraction\IRepository.cs" />
     <Compile Include="Repositories\Implementation\CompanyRepository.cs" />
     <Compile Include="Repositories\Implementation\EmployeeRepository.cs" />
     <Compile Include="Repositories\Implementation\LogRepository.cs" />
     <Compile Include="Seed\Initializer.cs" />
-    <Compile Include="Seed\Initializor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

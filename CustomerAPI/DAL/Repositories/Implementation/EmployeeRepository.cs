@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Models;
 using DAL.Repositories.Abstraction;
-using static DAL.Context.Context;
+using DAL.Context;
 
 namespace DAL.Repositories.Implementation
 {

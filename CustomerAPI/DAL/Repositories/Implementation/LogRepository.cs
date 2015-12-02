@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Models;
 using DAL.Repositories.Abstraction;
-using static DAL.Context.Context;
+using DAL.Context;
 
 namespace DAL.Repositories.Implementation
 {
@@ -13,7 +13,7 @@ namespace DAL.Repositories.Implementation
     {
         public Log Add(Log item)
         {
-            using (var ctx = new DAL.Context.Context())
+            using (var ctx = new Context.Context())
             {
                 foreach (var empl in item.Employees)
                 {
@@ -27,7 +27,7 @@ namespace DAL.Repositories.Implementation
 
         public IEnumerable<Log> GetAll()
         {
-            using (var ctx = new DAL.Context.Context())
+            using (var ctx = new Context.Context())
             {
                 return ctx.Logs.Include("Employee").Where(c=> c.Active).ToList();
             }
@@ -35,7 +35,7 @@ namespace DAL.Repositories.Implementation
 
         public Log Get(int id)
         {
-            using (var ctx = new DAL.Context.Context())
+            using (var ctx = new Context.Context())
             {
                 return ctx.Logs.FirstOrDefault(c => c.Id == id && c.Active);
             }
@@ -43,7 +43,7 @@ namespace DAL.Repositories.Implementation
 
         public bool Update(Log item)
         {
-            using (var ctx = new DAL.Context.Context())
+            using (var ctx = new Context.Context())
             {
                 var result = ctx.Entry(item).Entity;
 
@@ -62,7 +62,7 @@ namespace DAL.Repositories.Implementation
 
         public bool DeActivate(Log item)
         {
-            using (var ctx = new DAL.Context.Context())
+            using (var ctx = new Context.Context())
             {
                 var result = ctx.Entry(item).Entity;
 
