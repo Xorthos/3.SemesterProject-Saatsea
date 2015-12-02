@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
+using Context.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -329,7 +330,6 @@ namespace CustomerAPI.Controllers
             }
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-            _userManager.
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 

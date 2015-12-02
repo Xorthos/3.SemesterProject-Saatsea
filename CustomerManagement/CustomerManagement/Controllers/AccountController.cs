@@ -74,13 +74,13 @@ namespace CustomerManagement.Controllers
                 return View(model);
             }
 
-            Proxy.Authorization.AuthorizeHttpClient.Login(new LoginModel()
+            Session["LoginModel"] = Proxy.Authorization.AuthorizeHttpClient.Login(new LoginModel()
             {
                 Email = model.Email,
                 Password = model.Password
             });
-            
-            return RedirectToLocal(returnUrl);
+
+            return RedirectToAction("Index", "Log");
         }
 
         //
@@ -128,7 +128,7 @@ namespace CustomerManagement.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        
         public ActionResult Register()
         {
             return View();
@@ -137,7 +137,6 @@ namespace CustomerManagement.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -155,7 +154,7 @@ namespace CustomerManagement.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Log");
                 }
                 AddErrors(result);
             }
