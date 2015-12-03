@@ -442,7 +442,7 @@ namespace CustomerManagement.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Log");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
