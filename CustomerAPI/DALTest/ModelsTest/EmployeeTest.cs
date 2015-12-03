@@ -69,6 +69,7 @@ namespace DALTest.ModelsTest
             Assert.AreEqual(emp.FirstName, "First ");
             Assert.AreEqual(emp.LastName, "Employee");
             Assert.AreEqual(emp.Country, "Denmark");
+            Assert.AreEqual(emp.Address, "This Vej 7");
             Assert.AreEqual(emp.ZipCode, 6700);
             Assert.AreEqual(emp.City, "Esbjerg");
             Assert.AreEqual(emp.BirthDate, DateTime.Now.Date);
