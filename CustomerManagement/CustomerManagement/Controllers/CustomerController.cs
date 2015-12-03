@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
@@ -8,13 +9,19 @@ using CustomerManagement.Attributes;
 using CustomerManagement.Models;
 using Proxy.Facade.Abstraction;
 using Proxy.Facade.Implementation;
+using Proxy.Models;
 
 namespace CustomerManagement.Controllers
 {
-    
+
     public class CustomerController : Controller
     {
-        IFacade facade = new Facade();
+        private IFacade facade;
+
+        public CustomerController()
+        {
+            facade = new Facade();
+        }
         // GET: Customer
         [AuthorizeLogin]
         public ActionResult Index()
@@ -33,6 +40,11 @@ namespace CustomerManagement.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "Name, Zipcode, Email, PhoneNr, Password")] CreateCompanyModel newCompanyModel)
         {
+            if (ModelState.IsValid)
+                facade.GetCompanyGateway().Add(newCompanyModel.Company);
+            else
+                return View(newCompanyModel);
+
             return RedirectToAction("Index");
         }
 

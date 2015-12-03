@@ -15,7 +15,7 @@ namespace CustomerAPI
         protected void Application_Start()
         {
             //This will initialize the database.
-            Initializor.Initalize();
+            Initializer.Initalize();
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);

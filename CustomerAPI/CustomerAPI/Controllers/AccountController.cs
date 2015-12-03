@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -20,15 +21,19 @@ using CustomerAPI.Results;
 
 namespace CustomerAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private UserManager<IdentityUser> _myUserManager;
+        private RoleManager<IdentityRole> _roleManager;
 
         public AccountController()
         {
+            _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new DAL.Context.Context()));
+            _myUserManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(new DAL.Context.Context()));
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -330,12 +335,17 @@ namespace CustomerAPI.Controllers
             }
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
+            }
+
+            if (result.Succeeded)
+            {
+                var currentUser = _myUserManager.FindByName(user.UserName);
+                var roleResult = _myUserManager.AddToRole(currentUser.Id,"Admin");
             }
 
             return Ok();

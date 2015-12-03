@@ -12,7 +12,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DAL.Seed
 {
-    class Initializer : DropCreateDatabaseAlways<Context.Context>
+    public class Initializer : DropCreateDatabaseAlways<Context.Context>
     {
         public Initializer()
         {
@@ -23,6 +23,10 @@ namespace DAL.Seed
             InitializeDatabase(new Context.Context());
         }
 
+        public static void Initalize()
+        {
+            Database.SetInitializer(new Initializer());
+        }
 
         public override void InitializeDatabase(DAL.Context.Context context)
         {
@@ -78,6 +82,7 @@ namespace DAL.Seed
             List<Employee> empList8 = new List<Employee>() { emp16 };
 
 
+
             context.Logs.Add(new Log() { Company = comp1, Employees = empList1, Date = DateTime.Now, Id = 1, Import = true });
             context.Logs.Add(new Log() { Company = comp2, Employees = empList2, Date = DateTime.Now, Id = 2, Import = true });
             context.Logs.Add(new Log() { Company = comp3, Employees = empList3, Date = DateTime.Now, Id = 3, Import = true });
@@ -86,7 +91,7 @@ namespace DAL.Seed
             context.Logs.Add(new Log() { Company = comp2, Employees = empList6, Date = DateTime.Now, Id = 6, Import = false });
             context.Logs.Add(new Log() { Company = comp1, Employees = empList7, Date = DateTime.Now, Id = 7, Import = false });
             context.Logs.Add(new Log() { Company = comp3, Employees = empList8, Date = DateTime.Now, Id = 8, Import = true });
-
+            
 
             base.Seed(context);
         }

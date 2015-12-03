@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Models;
 using DAL.Repositories.Abstraction;
-using Context = DAL.Context.Context;
+using DAL.Context;
 
 namespace DAL.Context.Repositories.Implementation
 {
@@ -43,7 +43,7 @@ namespace DAL.Context.Repositories.Implementation
         /// <returns>a list containing all the companies</returns>
         public IEnumerable<Company> GetAll()
         {
-            using (var ctx = new DAL.Context.Context())
+            using (var ctx = new Context())
             {
                 return ctx.Companies.Include("Employees").Where(c=> c.Active).ToList();
             }
@@ -56,7 +56,7 @@ namespace DAL.Context.Repositories.Implementation
         /// <returns>the company with the id</returns>
         public Company Get(int id)
         {
-            using (var ctx = new DAL.Context.Context())
+            using (var ctx = new Context())
             {
                 return ctx.Companies.Include("Employees").FirstOrDefault(c => c.Id == id && c.Active);
             }
