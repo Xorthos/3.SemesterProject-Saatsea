@@ -9,7 +9,7 @@ using DAL.Context;
 
 namespace DAL.Repositories.Implementation
 {
-    class LogRepository : IRepository<Log>
+   public class LogRepository : IRepository<Log>
     {
         public Log Add(Log item)
         {

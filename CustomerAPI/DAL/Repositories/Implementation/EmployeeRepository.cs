@@ -9,7 +9,7 @@ using DAL.Context;
 
 namespace DAL.Repositories.Implementation
 {
-    class EmployeeRepository : IRepository<Employee>
+   public class EmployeeRepository : IRepository<Employee>
     {
         /// <summary>
         /// Adds an employee to the database
