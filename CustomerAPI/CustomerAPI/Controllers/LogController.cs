@@ -11,7 +11,7 @@ using DAL.Repositories.Abstraction;
 
 namespace CustomerAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class LogController : ApiController
     {
         private IFacade facade;

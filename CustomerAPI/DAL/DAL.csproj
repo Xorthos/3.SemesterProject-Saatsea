@@ -63,6 +63,7 @@
     <Compile Include="Facade\Implementation\Facade.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\SeedingModels\SeedingUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

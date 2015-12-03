@@ -79,8 +79,8 @@ namespace CustomerManagement.Controllers
                 Email = model.Email,
                 Password = model.Password
             });
-            
-            return RedirectToLocal(returnUrl);
+
+            return RedirectToAction("Index", "Log");
         }
 
         //
@@ -128,7 +128,7 @@ namespace CustomerManagement.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        
         public ActionResult Register()
         {
             return View();
@@ -137,7 +137,6 @@ namespace CustomerManagement.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
