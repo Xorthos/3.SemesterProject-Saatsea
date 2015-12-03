@@ -35,6 +35,11 @@ namespace CustomerAPI.Controllers
             var response = Request.CreateResponse(HttpStatusCode.OK, repository.GetAll());
             return response;
         }
+        
+        public HttpResponseMessage Import(int v, List<Employee> employees)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Gets a specific employee
