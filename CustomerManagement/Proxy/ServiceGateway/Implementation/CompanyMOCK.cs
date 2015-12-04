@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Proxy.Models;
+using Proxy.Models.AuthorizationModels;
 using Proxy.ServiceGateway.Abstraction;
 
 namespace Proxy.ServiceGateway.Implementation
@@ -35,6 +36,10 @@ namespace Proxy.ServiceGateway.Implementation
             comp.PhoneNr = item.PhoneNr;
             comp.Zipcode = item.Zipcode;
             return true;
+        }
+
+        public CompanyMOCK(LoggedInModel model) : base(model)
+        {
         }
     }
 }

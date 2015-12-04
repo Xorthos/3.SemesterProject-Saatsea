@@ -29,7 +29,7 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new Context.Context())
             {
-                return ctx.Logs.Include("Employee").Where(c=> c.Active).ToList();
+                return ctx.Logs.Include("Employees").ToList();
             }
         }
 

@@ -13,7 +13,6 @@ namespace CustomerManagement.Attributes
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-
             return SessionHelper.LoginModel;
         }
     }

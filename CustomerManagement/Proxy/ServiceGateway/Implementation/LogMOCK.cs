@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Proxy.Models;
+using Proxy.Models.AuthorizationModels;
 using Proxy.ServiceGateway.Abstraction;
 
 namespace Proxy.ServiceGateway.Implementation
@@ -34,6 +35,10 @@ namespace Proxy.ServiceGateway.Implementation
             log.Date = item.Date;
             log.Import = item.Import;
             return true;
+        }
+
+        public LogMOCK(LoggedInModel model) : base(model)
+        {
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -20,7 +21,9 @@ namespace DAL.Seed
             var cont = new Context.Context();
             //cont.Database.Initialize(true);
             cont.Database.Delete(); // the proper initializing doesn't work, so we use this.
-            InitializeDatabase(new Context.Context());
+            Context.Context context = new Context.Context();
+            InitializeDatabase(context);
+            Seed(context);
         }
 
         public static void Initalize()
@@ -28,20 +31,10 @@ namespace DAL.Seed
             Database.SetInitializer(new Initializer());
         }
 
+        
+
         public override void InitializeDatabase(DAL.Context.Context context)
         {
-            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            rm.Create(new IdentityRole("Admin"));
-            var um = new UserManager<ApplicationUser>( new UserStore<ApplicationUser>(context));
-            var user = new ApplicationUser()
-            {
-                UserName = "admin@admin.com",
-                Email = "admin@admin.com"
-            };
-            um.Create(user, "_admin123");
-
-            um.AddToRole(user.Id, "Admin");
-
             Company comp1 = new Company() { Email = "random@hej.com", Id = 1, Name = "Random", PhoneNr = "23541365", Zipcode = 2354 };
             Company comp2 = new Company() { Email = "douche@hej.com", Id = 2, Name = "douche", PhoneNr = "67352543", Zipcode = 1323 };
             Company comp3 = new Company() { Email = "supster@hej.com", Id = 3, Name = "Sup", PhoneNr = "85354256", Zipcode = 5231 };
@@ -81,8 +74,6 @@ namespace DAL.Seed
             List<Employee> empList7 = new List<Employee>() { emp1, emp2, emp3, emp4, emp5 };
             List<Employee> empList8 = new List<Employee>() { emp16 };
 
-
-
             context.Logs.Add(new Log() { Company = comp1, Employees = empList1, Date = DateTime.Now, Id = 1, Import = true });
             context.Logs.Add(new Log() { Company = comp2, Employees = empList2, Date = DateTime.Now, Id = 2, Import = true });
             context.Logs.Add(new Log() { Company = comp3, Employees = empList3, Date = DateTime.Now, Id = 3, Import = true });
@@ -91,7 +82,27 @@ namespace DAL.Seed
             context.Logs.Add(new Log() { Company = comp2, Employees = empList6, Date = DateTime.Now, Id = 6, Import = false });
             context.Logs.Add(new Log() { Company = comp1, Employees = empList7, Date = DateTime.Now, Id = 7, Import = false });
             context.Logs.Add(new Log() { Company = comp3, Employees = empList8, Date = DateTime.Now, Id = 8, Import = true });
+
             
+            base.InitializeDatabase(context);
+            
+        }
+
+        protected override void Seed(Context.Context context)
+        {
+            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            rm.Create(new IdentityRole("Admin"));
+            var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var user = new ApplicationUser()
+            {
+                UserName = "admin@admin.com",
+                Email = "admin@admin.com"
+            };
+            um.Create(user, "_admin123");
+
+            var newUser = um.FindByName("admin@admin.com");
+
+            um.AddToRole(newUser.Id, "Admin");
 
             base.Seed(context);
         }

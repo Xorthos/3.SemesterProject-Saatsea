@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Proxy.Models;
+using Proxy.Models.AuthorizationModels;
 using Proxy.ServiceGateway.Abstraction;
 
 namespace Proxy.ServiceGateway.Implementation
@@ -42,6 +43,10 @@ namespace Proxy.ServiceGateway.Implementation
             emp.Rank = item.Rank;
             emp.ZipCode = item.ZipCode;
             return true;
+        }
+
+        public EmployeeMOCK(LoggedInModel model) : base(model)
+        {
         }
     }
 }

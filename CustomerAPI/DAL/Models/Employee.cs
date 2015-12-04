@@ -33,14 +33,14 @@ namespace DAL.Models
         public virtual Company Company { get; set; }
         [Required]
         public bool Active { get; set; }
-        public override bool Equals(object emp)
-        {
-            return Id == (emp as Employee).Id;
-        }
-        public override int GetHashCode()
-        {
-            return Convert.ToInt32(Id);
-        }
+        //public override bool Equals(object emp)
+        //{
+        //    return Id == (emp as Employee).Id;
+        //}
+        //public override int GetHashCode()
+        //{
+        //    return Convert.ToInt32(Id);
+        //}
         public virtual List<Log> Logs { get; set; }
     }
 }

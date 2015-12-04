@@ -32,7 +32,8 @@ namespace Proxy.ServiceGateway.Implementation
             {
                 var response = httpClient.GetAsync(LOG_END_POINT).Result;
 
-                return JsonConvert.DeserializeObject<List<Log>>(response.Content.ReadAsStringAsync().Result);
+                var result = JsonConvert.DeserializeObject<Log[]>(response.Content.ReadAsStringAsync().Result);
+                return result.ToList();
             }
         }
 
