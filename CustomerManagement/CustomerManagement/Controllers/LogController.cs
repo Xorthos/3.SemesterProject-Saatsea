@@ -17,13 +17,13 @@ namespace CustomerManagement.Controllers
         public ActionResult Index()
         {
             
-            return View(facade.GetLogGateway().GetAll());
+            return View(facade.GetLogGateway(SessionHelper.LoginModel).GetAll());
         }
 
         [AuthorizeLogin]
         public ActionResult LogDetails(int id)
         {
-            return View(facade.GetLogGateway().Get(id));
+            return View(facade.GetLogGateway(SessionHelper.LoginModel).Get(id));
         }
     }
 }

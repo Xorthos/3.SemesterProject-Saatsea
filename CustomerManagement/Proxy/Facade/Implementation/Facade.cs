@@ -14,17 +14,17 @@ namespace Proxy.Facade.Implementation
     {
         public ServiceGateway<Company> GetCompanyGateway()
         {
-            return new CompanyMOCK();
+            return new CompanyGateway();
         }
 
         public ServiceGateway<Employee> GetEmployeeGateway()
         {
-            return new EmployeeMOCK();
+            return new EmployeeGateway();
         }
 
         public ServiceGateway<Log> GetLogGateway()
         {
-            return new LogMOCK();
+            return new LogGateway();
         }
     }
 }

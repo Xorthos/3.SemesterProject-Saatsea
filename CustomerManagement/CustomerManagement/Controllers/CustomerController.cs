@@ -26,7 +26,7 @@ namespace CustomerManagement.Controllers
         [AuthorizeLogin]
         public ActionResult Index()
         {
-            return View(facade.GetCompanyGateway().GetAll());
+            return View(facade.GetCompanyGateway(SessionHelper.LoginModel).GetAll());
         }
 
         [AuthorizeLogin]
@@ -41,7 +41,7 @@ namespace CustomerManagement.Controllers
         public ActionResult Create([Bind(Include = "Name, Zipcode, Email, PhoneNr, Password")] CreateCompanyModel newCompanyModel)
         {
             if (ModelState.IsValid)
-                facade.GetCompanyGateway().Add(newCompanyModel.Company);
+                facade.GetCompanyGateway(SessionHelper.LoginModel).Add(newCompanyModel.Company);
             else
                 return View(newCompanyModel);
 
