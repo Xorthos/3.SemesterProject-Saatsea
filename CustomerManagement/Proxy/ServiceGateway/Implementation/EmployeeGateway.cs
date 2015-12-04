@@ -5,7 +5,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Proxy.Authorization;
 using Proxy.Models;
+using Proxy.Models.AuthorizationModels;
 using Proxy.ServiceGateway.Abstraction;
 
 namespace Proxy.ServiceGateway.Implementation
@@ -17,7 +19,7 @@ namespace Proxy.ServiceGateway.Implementation
 
         public override Employee Add(Employee item)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = AuthorizeHttpClient.GetAuthorizeClient(_loggedInModel))
             {
                 var result = httpClient.PostAsJsonAsync(EMPLOYEE_END_POINT, item).Result;
 
@@ -27,7 +29,7 @@ namespace Proxy.ServiceGateway.Implementation
 
         public override IEnumerable<Employee> GetAll()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = AuthorizeHttpClient.GetAuthorizeClient(_loggedInModel))
             {
                 var response = httpClient.GetAsync(EMPLOYEE_END_POINT).Result;
 
@@ -37,7 +39,7 @@ namespace Proxy.ServiceGateway.Implementation
 
         public override Employee Get(int id)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = AuthorizeHttpClient.GetAuthorizeClient(_loggedInModel))
             {
                 var response = httpClient.GetAsync(EMPLOYEE_END_POINT + id).Result;
 
@@ -47,12 +49,16 @@ namespace Proxy.ServiceGateway.Implementation
 
         public override bool Update(Employee item)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = AuthorizeHttpClient.GetAuthorizeClient(_loggedInModel))
             {
                 var result = httpClient.PutAsJsonAsync(EMPLOYEE_END_POINT, item).Result;
 
                 return JsonConvert.DeserializeObject<bool>(result.Content.ReadAsStringAsync().Result);
             }
+        }
+
+        public EmployeeGateway(LoggedInModel model) : base(model)
+        {
         }
     }
 }

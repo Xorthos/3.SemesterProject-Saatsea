@@ -5,7 +5,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Proxy.Authorization;
 using Proxy.Models;
+using Proxy.Models.AuthorizationModels;
 using Proxy.ServiceGateway.Abstraction;
 
 namespace Proxy.ServiceGateway.Implementation
@@ -17,7 +19,7 @@ namespace Proxy.ServiceGateway.Implementation
 
         public override Company Add(Company item)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = AuthorizeHttpClient.GetAuthorizeClient(_loggedInModel))
             {
                 var result = httpClient.PostAsJsonAsync(COMPANY_END_POINT, item).Result;
 
@@ -27,7 +29,7 @@ namespace Proxy.ServiceGateway.Implementation
 
         public override IEnumerable<Company> GetAll()
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = AuthorizeHttpClient.GetAuthorizeClient(_loggedInModel))
             {
                 var response = httpClient.GetAsync(COMPANY_END_POINT).Result;
 
@@ -37,7 +39,7 @@ namespace Proxy.ServiceGateway.Implementation
 
         public override Company Get(int id)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = AuthorizeHttpClient.GetAuthorizeClient(_loggedInModel))
             {
                 var response = httpClient.GetAsync(COMPANY_END_POINT + id).Result;
 
@@ -47,12 +49,16 @@ namespace Proxy.ServiceGateway.Implementation
 
         public override bool Update(Company item)
         {
-            using (var httpClient = new HttpClient())
+            using (var httpClient = AuthorizeHttpClient.GetAuthorizeClient(_loggedInModel))
             {
                 var result = httpClient.PutAsJsonAsync(COMPANY_END_POINT, item).Result;
 
                 return JsonConvert.DeserializeObject<bool>(result.Content.ReadAsStringAsync().Result);
             }
+        }
+
+        public CompanyGateway(LoggedInModel model) : base(model)
+        {
         }
     }
 }
