@@ -17,14 +17,5 @@ namespace DAL.Models
         public virtual List<Employee> Employees {get; set; }
         public bool Active { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            return Id==(obj as Company).Id;
-        }
-
-        public override int GetHashCode()
-        {
-            return Convert.ToInt32(Id);
-        }
     }
 }

@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top" >
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,22 +17,35 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Log", new { area = "" }, new { @class = "navbar-brand" })
+                <a class="navbar-brand" href="/">
+                    <img src="~/Content/vs_logo.png" alt="VIKING Saatsee" />
+                </a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Logs", "Index", "Log")</li>
-                    <li>@Html.ActionLink("Manage customers", "Index", "Customer")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
+           @* <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+           <li>@Html.ActionLink("Logs", "Index", "Log")</li>
+    <li>@Html.ActionLink("Manage customers", "Index", "Customer")</li>*@
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Logs", "Index", "Log")</li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                   role="button" aria-expanded="false">Company<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("List All", "Index", "Customer")</li>
+                                    <li>@Html.ActionLink("Create", "Create", "Customer")</li>
+                                </ul>
+
+</ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+</div>
     </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - M&M&B</p>
         </footer>
     </div>
 

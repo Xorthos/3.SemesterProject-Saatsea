@@ -1,6 +1,10 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 83px;
     padding-bottom: 20px;
+    font-family: 'RobotoDraft', sans-serif;
+    font-size: 14px;
+    color: #333;
+    background-color: #f9f9f9;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,4 +25,18 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+
+
+.navbar-nav {
+    margin-left: 60px;
+}
+
+.navbar-nav > li > a {
+    padding-top: 31px;
+    padding-bottom: 32px;
+    font-weight: bold;
+    font-size: 14px;
+    
 }

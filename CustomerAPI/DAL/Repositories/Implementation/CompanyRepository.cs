@@ -45,7 +45,7 @@ namespace DAL.Context.Repositories.Implementation
         {
             using (var ctx = new Context())
             {
-                return ctx.Companies.Include("Employees").Where(c=> c.Active).ToList();
+                return ctx.Companies.Where(c=> c.Active).ToList();
             }
         }
 

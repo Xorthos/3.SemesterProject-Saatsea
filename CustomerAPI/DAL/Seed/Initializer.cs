@@ -35,9 +35,9 @@ namespace DAL.Seed
 
         public override void InitializeDatabase(DAL.Context.Context context)
         {
-            Company comp1 = new Company() { Email = "random@hej.com", Id = 1, Name = "Random", PhoneNr = "23541365", Zipcode = 2354 };
-            Company comp2 = new Company() { Email = "douche@hej.com", Id = 2, Name = "douche", PhoneNr = "67352543", Zipcode = 1323 };
-            Company comp3 = new Company() { Email = "supster@hej.com", Id = 3, Name = "Sup", PhoneNr = "85354256", Zipcode = 5231 };
+            Company comp1 = new Company() { Email = "random@hej.com", Id = 1, Name = "Random", PhoneNr = "23541365", Zipcode = 2354 ,Active =true};
+            Company comp2 = new Company() { Email = "douche@hej.com", Id = 2, Name = "douche", PhoneNr = "67352543", Zipcode = 1323, Active = true };
+            Company comp3 = new Company() { Email = "supster@hej.com", Id = 3, Name = "Sup", PhoneNr = "85354256", Zipcode = 5231, Active = true };
 
             Employee emp1 = context.Employees.Add(new Employee() { Company = comp1, Id = 1, FirstName = "Hans", LastName = "Peterson", BirthDate = DateTime.Now.AddYears(-36), Address = "Højvej 22", ZipCode = 6700, City = "Esbjerg", Country = "Danmark", Phone = "56428657", Active = true, Rank = "Programmer" });
             Employee emp2 = context.Employees.Add(new Employee() { Company = comp1, Id = 1, FirstName = "Grete", LastName = "Peterson", BirthDate = DateTime.Now.AddYears(-36), Address = "esbjerg vej 53", ZipCode = 6700, City = "Esbjerg", Country = "Danmark", Phone = "45732137", Active = true, Rank = "Cisco god" });
@@ -74,14 +74,14 @@ namespace DAL.Seed
             List<Employee> empList7 = new List<Employee>() { emp1, emp2, emp3, emp4, emp5 };
             List<Employee> empList8 = new List<Employee>() { emp16 };
 
-            context.Logs.Add(new Log() { Company = comp1, Employees = empList1, Date = DateTime.Now, Id = 1, Import = true });
-            context.Logs.Add(new Log() { Company = comp2, Employees = empList2, Date = DateTime.Now, Id = 2, Import = true });
-            context.Logs.Add(new Log() { Company = comp3, Employees = empList3, Date = DateTime.Now, Id = 3, Import = true });
-            context.Logs.Add(new Log() { Company = comp3, Employees = empList4, Date = DateTime.Now, Id = 4, Import = true });
-            context.Logs.Add(new Log() { Company = comp1, Employees = empList5, Date = DateTime.Now, Id = 5, Import = true });
-            context.Logs.Add(new Log() { Company = comp2, Employees = empList6, Date = DateTime.Now, Id = 6, Import = false });
-            context.Logs.Add(new Log() { Company = comp1, Employees = empList7, Date = DateTime.Now, Id = 7, Import = false });
-            context.Logs.Add(new Log() { Company = comp3, Employees = empList8, Date = DateTime.Now, Id = 8, Import = true });
+            context.Logs.Add(new Log() { Company = comp1, Employees = empList1, Date = DateTime.Now, Id = 1, Import = true, Active=true});
+            context.Logs.Add(new Log() { Company = comp2, Employees = empList2, Date = DateTime.Now, Id = 2, Import = true, Active = true });
+            context.Logs.Add(new Log() { Company = comp3, Employees = empList3, Date = DateTime.Now, Id = 3, Import = true, Active = true });
+            context.Logs.Add(new Log() { Company = comp3, Employees = empList4, Date = DateTime.Now, Id = 4, Import = true, Active = true });
+            context.Logs.Add(new Log() { Company = comp1, Employees = empList5, Date = DateTime.Now, Id = 5, Import = true, Active = true });
+            context.Logs.Add(new Log() { Company = comp2, Employees = empList6, Date = DateTime.Now, Id = 6, Import = false, Active = true });
+            context.Logs.Add(new Log() { Company = comp1, Employees = empList7, Date = DateTime.Now, Id = 7, Import = false, Active = true });
+            context.Logs.Add(new Log() { Company = comp3, Employees = empList8, Date = DateTime.Now, Id = 8, Import = true, Active = true });
 
             
             base.InitializeDatabase(context);

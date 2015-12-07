@@ -165,6 +165,8 @@ namespace DALTest.ImportExportTest
         }
 
         [Test]
-        public void Receive_Own_Logs() { }
+        public void Receive_Own_Logs() {
+
+        }
     }
 }

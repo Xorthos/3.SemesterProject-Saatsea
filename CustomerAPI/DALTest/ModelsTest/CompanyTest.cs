@@ -63,8 +63,7 @@ namespace DALTest.ModelsTest
             Company comp1 = new Company { Id = 1};
             Company comp2 = new Company {Id =1};
 
-            Assert.AreEqual(comp1,comp2);
-            Assert.AreEqual(comp1.GetHashCode(),comp2.GetHashCode());
+            Assert.AreEqual(comp1.Id,comp2.Id);
         }
 
         [Test]
@@ -73,7 +72,6 @@ namespace DALTest.ModelsTest
             Company comp1 = new Company { Id = 1 };
             Company comp2 = new Company { Id = 2 };
             Assert.AreNotEqual(comp1,comp2);
-            Assert.AreNotEqual(comp1.GetHashCode(),comp2.GetHashCode());
         }
 
 
