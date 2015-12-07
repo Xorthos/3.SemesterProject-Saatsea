@@ -20,10 +20,6 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new Context.Context())
             {
-                foreach (var log in item.Logs)
-                {
-                    ctx.Logs.Attach(log);
-                }
 
                 var result = ctx.Employees.Add(item);
                 ctx.SaveChanges();

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Security.Principal;
+using System.Threading;
 using System.Web;
 using System.Web.Http;
 using CustomerAPI.Attributes;
@@ -14,7 +16,7 @@ using DAL.Repositories.Abstraction;
 
 namespace CustomerAPI.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class EmployeeController : ApiController
     {
         private IFacade facade;
@@ -35,11 +37,6 @@ namespace CustomerAPI.Controllers
         {
             var response = Request.CreateResponse(HttpStatusCode.OK, repository.GetAll());
             return response;
-        }
-        
-        public HttpResponseMessage Import(int v, List<Employee> employees)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -78,16 +75,28 @@ namespace CustomerAPI.Controllers
         }
         
         [AllowAnonymous]
-        public string Import(string userName, string password)
+        [MyBasicAuthenticationFilter]
+        [Route("api/employee/import")]
+        public HttpResponseMessage Import(IEnumerable<Employee> Employees)
         {
-            if (facade.GetCompanyRepository().AuthenticateCompany(userName, password))
+            if (Employees == null || !Employees.Any())
             {
-                return "Allowed";
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
-            else
+
+            
+            Company comp = facade.GetCompanyRepository().Get(Thread.CurrentPrincipal.Identity.Name);
+            Log newLog = new Log() {Company = comp, Active = true, Date = DateTime.Now, Import = true};
+            foreach (var emp in Employees)
             {
-                return "Not allowed";
+                emp.Company = comp;
+                Employee newEmp = facade.GetEmployeeRepository().Add(emp);
+                comp.Employees.Add(newEmp);
+                newLog.Employees.Add(newEmp);
             }
+            facade.GetCompanyRepository().Update(comp);
+            facade.GetLogRepository().Add(newLog);
+            return null ;
         }
     }
 }
