@@ -88,8 +88,7 @@ namespace DALTest.ModelsTest
             Employee emp1 = new Employee {Id = 1 };
             Employee emp2 = new Employee {Id = 1 };
 
-            Assert.AreEqual(emp1, emp2);
-            Assert.AreEqual(emp1.GetHashCode(),emp2.GetHashCode());
+            Assert.AreEqual(emp1.Id, emp2.Id);
         }
 
         [Test] public void Employee_With_Different_Id_Should_Be_Unequal_And_Have_Different_HashCode_Test()
@@ -98,7 +97,6 @@ namespace DALTest.ModelsTest
             Employee emp2 = new Employee { Id = 2 };
 
             Assert.AreNotEqual(emp1, emp2);
-            Assert.AreNotEqual(emp1.GetHashCode(), emp2.GetHashCode());
         }
     }
 }

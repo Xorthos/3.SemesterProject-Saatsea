@@ -29,7 +29,7 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new Context.Context())
             {
-                return ctx.Logs.Include("Employees").ToList();
+                return ctx.Logs.Include("Employees").Include("Company").ToList();
             }
         }
 
@@ -37,7 +37,8 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new Context.Context())
             {
-                return ctx.Logs.FirstOrDefault(c => c.Id == id && c.Active);
+
+                return ctx.Logs.Include("Company").Include("Employees").FirstOrDefault(c => c.Id == id && c.Active);
             }
         }
 

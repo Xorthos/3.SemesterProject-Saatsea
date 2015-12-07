@@ -18,7 +18,6 @@ namespace CustomerManagement.Controllers
         [AuthorizeLogin]
         public ActionResult Index()
         {
-            
             return View(facade.GetLogGateway((LoggedInModel)Session["LoginModel"]).GetAll());
         }
 
