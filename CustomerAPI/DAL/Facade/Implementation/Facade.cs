@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Context.Repositories.Abstraction;
 using DAL.Context.Repositories.Implementation;
 using DAL.Facade.Abstraction;
 using DAL.Models;
@@ -35,7 +36,7 @@ namespace DAL.Facade.Implementation
         /// Creates a CompanyRepository and returns it
         /// </summary>
         /// <returns>a CompanyRepository</returns>
-        public IRepository<Company> GetCompanyRepository()
+        public ICompanyRepository GetCompanyRepository()
         {
             return new CompanyRepository();
         }

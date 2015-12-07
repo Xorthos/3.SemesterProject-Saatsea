@@ -67,6 +67,7 @@
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\SeedingModels\SeedingUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Abstraction\ICompanyRepository.cs" />
     <Compile Include="Repositories\Abstraction\IRepository.cs" />
     <Compile Include="Repositories\Implementation\CompanyRepository.cs" />
     <Compile Include="Repositories\Implementation\EmployeeRepository.cs" />

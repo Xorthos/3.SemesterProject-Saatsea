@@ -4,13 +4,17 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Context.Models;
+using Context.Repositories.Abstraction;
 using DAL.Models;
 using DAL.Repositories.Abstraction;
 using DAL.Context;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DAL.Context.Repositories.Implementation
 {
-    public class CompanyRepository : IRepository<Company>
+    public class CompanyRepository : ICompanyRepository
     {
         /// <summary>
         /// Add an item, to the database
@@ -109,6 +113,20 @@ namespace DAL.Context.Repositories.Implementation
                 ctx.SaveChanges();
                 return true;
             }
+        }
+
+        public bool AuthenticateCompany(string userName, string password)
+        {
+            var ctx = new Context();
+            var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ctx));
+
+            var user = um.FindByEmailAsync(userName).Result;
+            if (um.CheckPassword(um.FindByEmail(userName), password))
+            {
+                return true;
+            }
+            
+            return false;
         }
     }
 }
