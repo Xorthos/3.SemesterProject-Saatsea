@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web;
 using System.Web.Http;
+using CustomerAPI.Attributes;
 using DAL.Facade.Abstraction;
 using DAL.Facade.Implementation;
 using DAL.Models;
@@ -74,6 +75,19 @@ namespace CustomerAPI.Controllers
         {
             var response = Request.CreateResponse(HttpStatusCode.Accepted, repository.Update(empl));
             return response;
+        }
+        
+        [AllowAnonymous]
+        public string Import(string userName, string password)
+        {
+            if (facade.GetCompanyRepository().AuthenticateCompany(userName, password))
+            {
+                return "Allowed";
+            }
+            else
+            {
+                return "Not allowed";
+            }
         }
     }
 }
