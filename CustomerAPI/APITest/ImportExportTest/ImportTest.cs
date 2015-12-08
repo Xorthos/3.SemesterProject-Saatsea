@@ -8,41 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Web.Http.Controllers;
 using Newtonsoft.Json;
 using DAL.Context.Repositories.Implementation;
 using DAL.Repositories.Implementation;
+using Moq;
 
-namespace DALTest.ImportExportTest
+namespace APITest.ImportExportTest
 {
     [TestFixture]
   public  class ImportTest
     {
-       
-        [Test]
-        public void Import_Where_Company_Does_Not_Exist() {
-
-            List<Employee> employees = new List<Employee>();
-            Employee emp1 = new Employee()
-            {
-                Id = 1000,
-                FirstName = "1001 Employee",
-
-            };
-            Employee emp2 = new Employee()
-            {
-                Id = 1001,
-                FirstName = "1002 Employee",
-
-            };
-            employees.Add(emp1);
-            employees.Add(emp2);
-
-            EmployeeController empcont = new EmployeeController();
-            
-           var response=empcont.Import(2000, employees);
-           Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
-            
-        }
 
     /// <summary>
     /// Testing there are no employees
@@ -54,7 +30,7 @@ namespace DALTest.ImportExportTest
             List<Employee> employees = new List<Employee>();
             
             EmployeeController empcont = new EmployeeController();
-            var response = empcont.Import(1, employees);
+            var response = empcont.Import(employees);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.BadRequest);
         }
          /// <summary>
@@ -72,7 +48,7 @@ namespace DALTest.ImportExportTest
             employees.Add(emp1);
 
             EmployeeController empcont = new EmployeeController();
-            var response = empcont.Import(1, employees);
+            var response = empcont.Import(employees);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             CompanyRepository comprepo = new CompanyRepository();
             //get the company with Id =1
@@ -113,7 +89,7 @@ namespace DALTest.ImportExportTest
             employees.Add(emp2);
 
             EmployeeController empcont = new EmployeeController();
-            var response = empcont.Import(2, employees);
+            var response = empcont.Import(employees);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             CompanyRepository comprepo = new CompanyRepository();
             //get the company with Id =1
@@ -144,10 +120,10 @@ namespace DALTest.ImportExportTest
             employees.Add(emp1);
 
             EmployeeController empcont = new EmployeeController();
-            var response = empcont.Import(1, employees);
+            var response = empcont.Import(employees);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
 
-            response = empcont.Import(1, employees);
+            response = empcont.Import(employees);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
 
             CompanyRepository comprepo = new CompanyRepository();

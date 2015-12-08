@@ -12,5 +12,7 @@ namespace Context.Repositories.Abstraction
     public interface ICompanyRepository : IRepository<Company>
     {
         bool AuthenticateCompany(string userName, string password);
+
+        Company Get(string email);
     }
 }

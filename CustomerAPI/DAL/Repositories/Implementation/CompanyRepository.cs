@@ -64,6 +64,19 @@ namespace DAL.Context.Repositories.Implementation
         }
 
         /// <summary>
+        /// Returns a specific company, with a given email.
+        /// </summary>
+        /// <param name="email">the email of a company</param>
+        /// <returns>the company with the email</returns>
+        public Company Get(string email)
+        {
+            using (var ctx = new Context())
+            {
+                return ctx.Companies.Include("Employees").FirstOrDefault(c => c.Email.Equals(email) && c.Active);
+            }
+        }
+
+        /// <summary>
         /// Updates an item in the database
         /// </summary>
         /// <param name="item">the company that will be updated</param>
@@ -116,8 +129,7 @@ namespace DAL.Context.Repositories.Implementation
         {
             var ctx = new Context();
             var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ctx));
-
-            var user = um.FindByEmailAsync(userName).Result;
+            
             if (um.CheckPassword(um.FindByEmail(userName), password))
             {
                 return true;
