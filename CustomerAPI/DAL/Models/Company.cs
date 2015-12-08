@@ -16,6 +16,7 @@ namespace DAL.Models
         public string PhoneNr { get; set; }
         public virtual List<Employee> Employees {get; set; }
         public bool Active { get; set; }
+        public string AccessString { get; set; }
 
     }
 }

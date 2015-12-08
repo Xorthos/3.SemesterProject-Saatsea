@@ -25,22 +25,16 @@ namespace DAL.Context.Repositories.Implementation
         public Company Add(Company item)
         {
             using (var ctx = new Context())
-            {
-                // I need to see if this is necessary
-                if (item.Employees != null)
-                {
-                    foreach (var empl in item.Employees)
-                    {
-                        ctx.Employees.Attach(empl);
-                    }
-                }
-
+            {  
+                
                 var result = ctx.Companies.Add(item);
+                
                 ctx.SaveChanges();
 
                 return result;
             }
         }
+    
 
         /// <summary>
         /// Gets all the companies from the database
@@ -50,7 +44,10 @@ namespace DAL.Context.Repositories.Implementation
         {
             using (var ctx = new Context())
             {
-                return ctx.Companies.Where(c=> c.Active).ToList();
+              
+                var result=ctx.Companies.Where(c=> c.Active).ToList();
+               
+                return result;
             }
         }
 
