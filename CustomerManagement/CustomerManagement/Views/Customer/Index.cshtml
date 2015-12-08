@@ -47,8 +47,9 @@
              @Html.DisplayFor(modelItem=>item.AccessString)
          </td>
         <td>
-            @Html.ActionLink("Deactivate", "Deactivate", new { id=item.ID }) |
-        </td>
+            @Html.ActionLink("Deactivate", "Deactivate", new { id = item.ID })
+            @Html.ActionLink("Update", "Update", "Customer", new { id = item.ID }, new { @class = "btn btn-success" })</td>
+        
     </tr>
 }
 

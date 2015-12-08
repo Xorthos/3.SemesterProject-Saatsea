@@ -248,6 +248,7 @@
     <Content Include="Views\Index.cshtml" />
     <Content Include="Views\Test\Register.cshtml" />
     <Content Include="Views\Test\GetInfomation.cshtml" />
+    <Content Include="Views\Customer\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

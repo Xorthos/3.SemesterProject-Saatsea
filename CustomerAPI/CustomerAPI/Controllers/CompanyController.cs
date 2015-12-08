@@ -98,5 +98,28 @@ namespace CustomerAPI.Controllers
             
             return response;
         }
+
+        /// <summary>
+        /// deActivate company in the database.
+        /// </summary>
+        /// <param name="comp">the company to be updated</param>
+        /// <returns>true if the company was successfully deActivate</returns>
+        [HttpPut]
+        public HttpResponseMessage DeActivate(Company comp)
+        {
+            HttpResponseMessage response;
+            if (repository.DeActivate(comp))
+            {
+                response = Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                response = Request.CreateResponse(HttpStatusCode.Conflict);
+            }
+
+            return response;
+        }
+
+
     }
 }

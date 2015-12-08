@@ -37,6 +37,11 @@ namespace CustomerManagement.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Create one company
+        /// </summary>
+        /// <param name="newCompanyModel"></param>
+        /// <returns></returns>
         [AuthorizeLogin]
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -49,6 +54,32 @@ namespace CustomerManagement.Controllers
 
             return RedirectToAction("Index");
         }
+        /// <summary>
+        /// Update one company
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [AuthorizeLogin]
+        [HttpGet]
+        public ActionResult Update(int id) {
+            Company theCompany=(facade.GetCompanyGateway((LoggedInModel)Session["LoginModel"]).Get(id));
+            return View(theCompany);
+
+        }
+
+        [AuthorizeLogin]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Update(Company comp)
+        {
+            facade.GetCompanyGateway((LoggedInModel)Session["LoginModel"]).Update(comp);
+
+           
+            return Redirect("Index");
+
+        }
+
+
 
         [AuthorizeLogin]
         public ActionResult Deactivate(int id)
