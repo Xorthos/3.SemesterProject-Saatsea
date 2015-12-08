@@ -23,6 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.PhoneNr)
         </th>
+        <th>
+            @Html.DisplayNameFor(model=>model.AccessString)
+        </th>
         <th></th>
     </tr>
 
@@ -40,6 +43,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.PhoneNr)
         </td>
+         <td>
+             @Html.DisplayFor(modelItem=>item.AccessString)
+         </td>
         <td>
             @Html.ActionLink("Deactivate", "Deactivate", new { id=item.ID }) |
         </td>

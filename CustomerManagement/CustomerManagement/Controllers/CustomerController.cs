@@ -38,8 +38,9 @@ namespace CustomerManagement.Controllers
         }
 
         [AuthorizeLogin]
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Create([Bind(Include = "Name, Zipcode, Email, PhoneNr, Password")] CreateCompanyModel newCompanyModel)
+        public ActionResult Create( CreateCompanyModel newCompanyModel)
         {
             if (ModelState.IsValid)
                 facade.GetCompanyGateway((LoggedInModel)Session["LoginModel"]).Add(newCompanyModel.Company);

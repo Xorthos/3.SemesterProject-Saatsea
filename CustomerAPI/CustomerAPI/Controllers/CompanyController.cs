@@ -8,6 +8,10 @@ using DAL.Facade.Abstraction;
 using DAL.Facade.Implementation;
 using DAL.Models;
 using DAL.Repositories.Abstraction;
+using Microsoft.AspNet.Identity.EntityFramework;
+using DAL.Context;
+using Microsoft.AspNet.Identity;
+using Context.Models;
 
 namespace CustomerAPI.Controllers
 {
@@ -57,6 +61,19 @@ namespace CustomerAPI.Controllers
         [HttpPost]
         public HttpResponseMessage Add(Company comp)
         {
+           var password = System.Web.Security.Membership.GeneratePassword(10,10);
+            var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new DAL.Context.Context()));
+            var user = new ApplicationUser()
+            {   
+
+                UserName = comp.Email,
+                Email = comp.Email
+            };
+            
+            um.Create(user, password);
+            var bytes = System.Text.Encoding.UTF8.GetBytes(comp.Email+":"+ password);
+            comp.AccessString = System.Convert.ToBase64String(bytes);
+            comp.Active = true;
             var response = Request.CreateResponse(HttpStatusCode.OK, repository.Add(comp));
             return response;
         }
