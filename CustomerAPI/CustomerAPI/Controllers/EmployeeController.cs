@@ -86,17 +86,56 @@ namespace CustomerAPI.Controllers
 
             
             Company comp = facade.GetCompanyRepository().Get(Thread.CurrentPrincipal.Identity.Name);
-            Log newLog = new Log() {Company = comp, Active = true, Date = DateTime.Now, Import = true};
+            Log newLog = new Log() {Company = comp, Active = true, Date = DateTime.Now, Import = true, Employees = new List<Employee>()};
+            bool changesWereMade = false;
             foreach (var emp in Employees)
             {
-                emp.Company = comp;
-                Employee newEmp = facade.GetEmployeeRepository().Add(emp);
-                comp.Employees.Add(newEmp);
-                newLog.Employees.Add(newEmp);
+                if (!ContainsEmployee(comp, emp))
+                {
+                    changesWereMade = true;
+                    emp.Company = comp;
+                    Employee newEmp = facade.GetEmployeeRepository().Add(emp);
+                    comp.Employees.Add(newEmp);
+                    newLog.Employees.Add(newEmp);
+                }
+                
             }
-            facade.GetCompanyRepository().Update(comp);
+
+            if (changesWereMade)
+            {
+                facade.GetCompanyRepository().Update(comp);
+                facade.GetLogRepository().Add(newLog);
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.Created);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [MyBasicAuthenticationFilter]
+        [Route("api/employee/export")]
+        public HttpResponseMessage Export()
+        {
+
+            Company comp = facade.GetCompanyRepository().Get(Thread.CurrentPrincipal.Identity.Name);
+            Log newLog = new Log() { Company = comp, Active = true, Date = DateTime.Now, Import = false, Employees = comp.Employees };
             facade.GetLogRepository().Add(newLog);
-            return null ;
+
+            return Request.CreateResponse(HttpStatusCode.OK, comp.Employees);
+
+        }
+
+        private bool ContainsEmployee(Company comp, Employee emp)
+        {
+            foreach (var compEmp in comp.Employees)
+            {
+                if (compEmp.Address.Equals(emp.Address) && compEmp.BirthDate == emp.BirthDate &&
+                    compEmp.FirstName.Equals(emp.FirstName) && compEmp.LastName.Equals(emp.LastName))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
