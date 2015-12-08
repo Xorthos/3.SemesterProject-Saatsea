@@ -39,29 +39,24 @@ namespace APITest.ImportExportTest
         [Test]
         public void Import_With_One_Employee_Correctly() {
             List<Employee> employees = new List<Employee>();
-            Employee emp1 = new Employee()
-            {
-                Id = 100001,
-                FirstName = "100001 Employee",
-             
-            };
+            Employee emp1 = new Employee() {Id = 1000000, FirstName = "TestOneEmp", LastName = "Peterson", BirthDate = DateTime.Now.AddYears(-96), Address = "Højvej 22", ZipCode = 6700, City = "Esbjerg", Country = "Danmark", Phone = "56428657", Active = true, Rank = "Programmer" };
             employees.Add(emp1);
 
             EmployeeController empcont = new EmployeeController();
             var response = empcont.Import(employees);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
             CompanyRepository comprepo = new CompanyRepository();
             //get the company with Id =1
             Company comp = comprepo.Get(1);
             EmployeeRepository emprepo = new EmployeeRepository();
-            Employee emp = emprepo.Get(100001);
-            Assert.AreEqual(comp,emp.Company);
+            Employee emp = emprepo.Get(1000000);
+            Assert.AreEqual(comp, emp.Company);
             LogRepository logrepo = new LogRepository();
             IEnumerable<Log> logList = logrepo.GetAll();
 
             Log log = logList.Where(l => l.Company.Equals(comp)).Where(l => l.Import = true).FirstOrDefault(l => l.Employees.Contains(emp));
 
-            Assert.IsTrue(log!=null);
+            Assert.IsTrue(log != null);
 
         }
 
@@ -142,7 +137,7 @@ namespace APITest.ImportExportTest
 
         [Test]
         public void Receive_Own_Logs() {
-
+            Assert.AreEqual(true, false);
         }
     }
 }

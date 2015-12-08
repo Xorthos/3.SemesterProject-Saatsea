@@ -9,6 +9,7 @@ using Context.Repositories.Abstraction;
 using DAL.Models;
 using DAL.Repositories.Abstraction;
 using DAL.Context;
+using DAL.Repositories.Implementation;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -90,6 +91,12 @@ namespace DAL.Context.Repositories.Implementation
                 if (result == null)
                 {
                     return false;
+                }
+                
+                
+                foreach (var empsToAttach in item.Employees)
+                {
+                    ctx.Employees.Attach(empsToAttach);
                 }
 
                 //sets the information

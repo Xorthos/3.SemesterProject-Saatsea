@@ -92,6 +92,7 @@ namespace DAL.Seed
         {
             var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             rm.Create(new IdentityRole("Admin"));
+            rm.Create(new IdentityRole("Company"));
             var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             var user = new ApplicationUser()
             {
@@ -103,6 +104,18 @@ namespace DAL.Seed
             var newUser = um.FindByName("admin@admin.com");
 
             um.AddToRole(newUser.Id, "Admin");
+
+            var compUser = new ApplicationUser()
+            {
+                UserName = "random@hej.com",
+                Email = "random@hej.com"
+            };
+            um.Create(compUser, "randompass");
+
+            newUser = um.FindByName("random@hej.com");
+
+            um.AddToRole(newUser.Id, "Company");
+
 
             base.Seed(context);
         }

@@ -21,6 +21,8 @@ namespace DAL.Repositories.Implementation
             using (var ctx = new Context.Context())
             {
 
+                ctx.Companies.Attach(item.Company);
+
                 var result = ctx.Employees.Add(item);
                 ctx.SaveChanges();
                 return result;

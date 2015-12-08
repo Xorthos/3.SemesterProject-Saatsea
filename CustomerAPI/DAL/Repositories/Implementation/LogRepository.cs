@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,12 +16,14 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new Context.Context())
             {
+                
                 foreach (var empl in item.Employees)
                 {
                     ctx.Employees.Attach(empl);
                 }
 
                 var result = ctx.Logs.Add(item);
+                ctx.SaveChanges();
                 return result;
             }
         }
