@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,9 @@ namespace Proxy.ServiceGateway.Implementation
             {
                 var response = httpClient.GetAsync(COMPANY_END_POINT).Result;
 
-                return JsonConvert.DeserializeObject<List<Company>>(response.Content.ReadAsStringAsync().Result);
+                var result = JsonConvert.DeserializeObject<List<Company>>(response.Content.ReadAsStringAsync().Result);
+
+                return result;
             }
         }
 
@@ -57,7 +60,11 @@ namespace Proxy.ServiceGateway.Implementation
             {
                 var result = httpClient.PutAsJsonAsync(COMPANY_END_POINT, item).Result;
 
-                return JsonConvert.DeserializeObject<bool>(result.Content.ReadAsStringAsync().Result);
+                if (result.StatusCode == HttpStatusCode.OK)
+                {
+                    return true;
+                }
+                return false;
             }
         }
 
@@ -67,9 +74,13 @@ namespace Proxy.ServiceGateway.Implementation
         {
             using (var httpClient = AuthorizeHttpClient.GetAuthorizeClient(_loggedInModel))
             {
-                var result = httpClient.PutAsJsonAsync(COMPANY_END_POINT + "/ChangeState", id).Result;
+                var result = httpClient.PutAsJsonAsync(COMPANY_END_POINT + "ChangeState/" + id.ToString(), "").Result;
 
-                return JsonConvert.DeserializeObject<bool>(result.Content.ReadAsStringAsync().Result);
+                if (result.StatusCode == HttpStatusCode.OK)
+                {
+                    return true;
+                }
+                return false;
             }
         }
     }

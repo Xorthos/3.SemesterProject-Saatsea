@@ -44,7 +44,7 @@ namespace APITest.ImportExportTest
 
             EmployeeController empcont = new EmployeeController();
             var response = empcont.Import(employees);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.Created);
+            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             CompanyRepository comprepo = new CompanyRepository();
             //get the company with Id =1
             Company comp = comprepo.Get(1);

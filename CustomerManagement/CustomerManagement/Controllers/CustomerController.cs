@@ -72,7 +72,11 @@ namespace CustomerManagement.Controllers
         [HttpPost]
         public ActionResult Update(Company comp)
         {
-            facade.GetCompanyGateway((LoggedInModel)Session["LoginModel"]).Update(comp);
+            Company theCompany = (facade.GetCompanyGateway((LoggedInModel)Session["LoginModel"]).Get(comp.ID));
+            theCompany.Name = comp.Name;
+            theCompany.PhoneNr = comp.PhoneNr;
+            theCompany.Zipcode = comp.Zipcode;
+            facade.GetCompanyGateway((LoggedInModel)Session["LoginModel"]).Update(theCompany);
 
            
             return RedirectToAction("Index");
@@ -84,7 +88,7 @@ namespace CustomerManagement.Controllers
         [AuthorizeLogin]
         public ActionResult Deactivate(int id)
         {
-            facade.GetCompanyGateway((LoggedInModel)Session["LoginMode"]).ChangeState(id);
+            facade.GetCompanyGateway((LoggedInModel)Session["LoginModel"]).ChangeState(id);
             return RedirectToAction("Index");
         }
     }

@@ -102,10 +102,10 @@ namespace CustomerAPI.Controllers
         /// <summary>
         /// deActivate company in the database.
         /// </summary>
-        /// <param name="comp">the company to be updated</param>
+        /// <param name="id"></param>
         /// <returns>true if the company was successfully deActivate</returns>
         [HttpPut]
-        [Route("api/Company/ChangeState")]
+        [Route("api/company/changestate/{id}")]
         public HttpResponseMessage ChangeState(int id)
         {
             Company comp = repository.Get(id);

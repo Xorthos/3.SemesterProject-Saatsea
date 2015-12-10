@@ -22,6 +22,11 @@ namespace CustomerAPI.Attributes
         {
             Facade facade = new Facade();
 
+            if (!facade.GetCompanyRepository().Get(username).Active)
+            {
+                return false;
+            }
+
             if (facade.GetCompanyRepository().AuthenticateCompany(username, password))
             {
                 return true;
