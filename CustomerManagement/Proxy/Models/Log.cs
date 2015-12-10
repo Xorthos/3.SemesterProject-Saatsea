@@ -13,5 +13,7 @@ namespace Proxy.Models
         public DateTime Date { get; set; }
         public bool Import { get; set; }
         public List<Employee> Employees  { get; set; }
+        public bool Active { get; set; }
+
     }
 }

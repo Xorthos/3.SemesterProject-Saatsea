@@ -64,7 +64,7 @@ namespace DAL.Repositories.Implementation
             }
         }
 
-        public bool DeActivate(Log item)
+        public bool ChangeState(Log item)
         {
             using (var ctx = new Context.Context())
             {

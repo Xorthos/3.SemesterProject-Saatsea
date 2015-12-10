@@ -14,6 +14,7 @@ namespace Proxy.Models
         public string Email { get; set; }
         public string PhoneNr { get; set; }
         public List<Employee> Employees  { get; set; }
+        public bool Active { get; set; }
         public string AccessString { get; set; }
     }
 }

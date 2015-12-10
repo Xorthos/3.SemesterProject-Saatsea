@@ -82,7 +82,7 @@ namespace DAL.Repositories.Implementation
         /// </summary>
         /// <param name="item">the item to be deactivated</param>
         /// <returns>true if it was successfully deactivated</returns>
-        public bool DeActivate(Employee item)
+        public bool ChangeState(Employee item)
         {
             using (var ctx = new Context.Context())
             {

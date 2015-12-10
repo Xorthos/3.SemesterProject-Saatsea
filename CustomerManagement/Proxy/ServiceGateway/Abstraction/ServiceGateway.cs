@@ -22,5 +22,8 @@ namespace Proxy.ServiceGateway.Abstraction
         public abstract IEnumerable<T> GetAll();
         public abstract T Get(int id);
         public abstract bool Update(T item);
+
+        public abstract bool ChangeState(int id);
+
     }
 }

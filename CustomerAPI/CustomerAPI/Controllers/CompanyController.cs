@@ -61,7 +61,7 @@ namespace CustomerAPI.Controllers
         [HttpPost]
         public HttpResponseMessage Add(Company comp)
         {
-           var password = System.Web.Security.Membership.GeneratePassword(10,10);
+            var password = System.Web.Security.Membership.GeneratePassword(10,10);
             var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new DAL.Context.Context()));
             var user = new ApplicationUser()
             {   
@@ -89,7 +89,7 @@ namespace CustomerAPI.Controllers
             HttpResponseMessage response;
             if (repository.Update(comp))
             {
-                response = Request.CreateResponse(HttpStatusCode.OK);
+                response = Request.CreateResponse(HttpStatusCode.OK, true);
             }
             else
             {
@@ -105,10 +105,12 @@ namespace CustomerAPI.Controllers
         /// <param name="comp">the company to be updated</param>
         /// <returns>true if the company was successfully deActivate</returns>
         [HttpPut]
-        public HttpResponseMessage DeActivate(Company comp)
+        [Route("api/Company/ChangeState")]
+        public HttpResponseMessage ChangeState(int id)
         {
+            Company comp = repository.Get(id);
             HttpResponseMessage response;
-            if (repository.DeActivate(comp))
+            if (repository.ChangeState(comp))
             {
                 response = Request.CreateResponse(HttpStatusCode.OK);
             }

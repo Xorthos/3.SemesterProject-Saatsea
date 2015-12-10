@@ -57,6 +57,11 @@ namespace Proxy.ServiceGateway.Implementation
             }
         }
 
+        public override bool ChangeState(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public EmployeeGateway(LoggedInModel model) : base(model)
         {
         }

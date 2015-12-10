@@ -84,30 +84,36 @@ namespace DAL.Context.Repositories.Implementation
         /// <returns>true if it succeds</returns>
         public bool Update(Company item)
         {
-            using (var ctx = new Context())
+            try
             {
-                Company result = ctx.Entry(item).Entity;
-
-                if (result == null)
+                using (var ctx = new Context())
                 {
-                    return false;
-                }
-                
-                
-                foreach (var empsToAttach in item.Employees)
-                {
-                    ctx.Employees.Attach(empsToAttach);
-                }
+                    Company result = ctx.Entry(item).Entity;
+                   
+                    if (result == null)
+                    {
+                        return false;
+                    }
+                    
+                    foreach (var empsToAttach in item.Employees)
+                    {
+                        ctx.Employees.Attach(empsToAttach);
+                    }
 
-                //sets the information
-                result.Employees = item.Employees;
-                result.Email = item.Email;
-                result.Name = item.Name;
-                result.PhoneNr = item.PhoneNr;
-                result.Zipcode = item.Zipcode;
+                    //sets the information
+                    result.Employees = item.Employees;
+                    result.Email = item.Email;
+                    result.Name = item.Name;
+                    result.PhoneNr = item.PhoneNr;
+                    result.Zipcode = item.Zipcode;
 
-                ctx.SaveChanges();
-                return true;
+                    ctx.SaveChanges();
+                    return true;
+                }
+            }
+            catch(Exception e) {
+                int x = 3;
+                return false;
             }
         }
 
@@ -116,7 +122,7 @@ namespace DAL.Context.Repositories.Implementation
         /// </summary>
         /// <param name="item">the item to be deactivated</param>
         /// <returns>true if the item was successfully deactivated</returns>
-        public bool DeActivate(Company item)
+        public bool ChangeState(Company item)
         {
             using (var ctx = new Context())
             {
@@ -125,9 +131,14 @@ namespace DAL.Context.Repositories.Implementation
                 {
                     return false;
                 }
-
+                if (result.Active) { 
                 result.Active = false;
+                }
+                else {
+                    result.Active = true;
+                }
                 ctx.SaveChanges();
+              
                 return true;
             }
         }

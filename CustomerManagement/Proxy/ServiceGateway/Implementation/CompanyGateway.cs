@@ -17,6 +17,10 @@ namespace Proxy.ServiceGateway.Implementation
         //Constant, the address of the web api
         protected static readonly string COMPANY_END_POINT = END_POINT + "Company/";
 
+        public CompanyGateway(LoggedInModel model) : base(model)
+        {
+        }
+
         public override Company Add(Company item)
         {
             using (var httpClient = AuthorizeHttpClient.GetAuthorizeClient(_loggedInModel))
@@ -57,8 +61,16 @@ namespace Proxy.ServiceGateway.Implementation
             }
         }
 
-        public CompanyGateway(LoggedInModel model) : base(model)
+
+
+        public override bool ChangeState(int id)
         {
+            using (var httpClient = AuthorizeHttpClient.GetAuthorizeClient(_loggedInModel))
+            {
+                var result = httpClient.PutAsJsonAsync(COMPANY_END_POINT + "/ChangeState", id).Result;
+
+                return JsonConvert.DeserializeObject<bool>(result.Content.ReadAsStringAsync().Result);
+            }
         }
     }
 }

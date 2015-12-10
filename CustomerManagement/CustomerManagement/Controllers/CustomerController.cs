@@ -75,7 +75,7 @@ namespace CustomerManagement.Controllers
             facade.GetCompanyGateway((LoggedInModel)Session["LoginModel"]).Update(comp);
 
            
-            return Redirect("Index");
+            return RedirectToAction("Index");
 
         }
 
@@ -84,7 +84,8 @@ namespace CustomerManagement.Controllers
         [AuthorizeLogin]
         public ActionResult Deactivate(int id)
         {
-            throw new NotImplementedException();
+            facade.GetCompanyGateway((LoggedInModel)Session["LoginMode"]).ChangeState(id);
+            return RedirectToAction("Index");
         }
     }
 }

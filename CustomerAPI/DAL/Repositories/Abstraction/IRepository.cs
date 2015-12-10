@@ -44,6 +44,6 @@ namespace DAL.Repositories.Abstraction
         /// </summary>
         /// <param name="item">the item that is wanted Deactivated </param>
         /// <returns>true if the item was successfully deactivated</returns>
-        bool DeActivate(T item);
+        bool ChangeState(T item);
     }
 }

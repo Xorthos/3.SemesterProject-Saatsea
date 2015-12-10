@@ -38,6 +38,11 @@ namespace Proxy.ServiceGateway.Implementation
             return true;
         }
 
+        public override bool ChangeState(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public CompanyMOCK(LoggedInModel model) : base(model)
         {
         }
