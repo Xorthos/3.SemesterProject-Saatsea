@@ -43,11 +43,20 @@
         <td>
             @Html.DisplayFor(modelItem => item.PhoneNr)
         </td>
-         <td>
-             @Html.DisplayFor(modelItem=>item.AccessString)
-         </td>
+         
         <td>
-            @Html.ActionLink("Deactivate", "Deactivate", "Customer", new { id = item.ID }, new { @class = "btn btn-warning"})
+            @Html.DisplayFor(modelItem=> item.AccessString)
+        </td>
+        <td>
+         @if (item.Active == true)
+         {
+         @Html.ActionLink("Deactivate", "ChangeState", "Customer", new { id = item.ID} ,new { @class = "btn btn-warning" })
+         }
+         else
+         {
+            @Html.ActionLink("Activate", "ChangeState", "Customer", new { id = item.ID }, new { @class = "btn btn-primary" })
+         }
+
             @Html.ActionLink("Update", "Update", "Customer", new { id = item.ID }, new { @class = "btn btn-success" })</td>
         
     </tr>
