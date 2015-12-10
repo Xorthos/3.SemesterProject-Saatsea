@@ -17,6 +17,7 @@ namespace CustomerAPI.Attributes
         { }
 
 
+        //Checks wether the username and password mathces.
         protected override bool OnAuthorizeUser(string username, string password, HttpActionContext actionContext)
         {
             Facade facade = new Facade();

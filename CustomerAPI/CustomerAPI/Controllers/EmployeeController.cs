@@ -74,6 +74,7 @@ namespace CustomerAPI.Controllers
             return response;
         }
         
+        [HttpPost]
         [AllowAnonymous]
         [MyBasicAuthenticationFilter]
         [Route("api/employee/import")]
@@ -87,11 +88,15 @@ namespace CustomerAPI.Controllers
             
             Company comp = facade.GetCompanyRepository().Get(Thread.CurrentPrincipal.Identity.Name);
             Log newLog = new Log() {Company = comp, Active = true, Date = DateTime.Now, Import = true, Employees = new List<Employee>()};
+
+            //Runs through every employee from the import list and checks if they are already present in the system.
             bool changesWereMade = false;
             foreach (var emp in Employees)
             {
+                //Checks if the employee is already in the system.
                 if (!ContainsEmployee(comp, emp))
                 {
+                    //If it is not in the system the nessecary changes will be made.
                     changesWereMade = true;
                     emp.Company = comp;
                     Employee newEmp = facade.GetEmployeeRepository().Add(emp);
@@ -101,13 +106,14 @@ namespace CustomerAPI.Controllers
                 
             }
 
+            //If changes were made the company will be updated and the new log will be saved. Otherwise it will be discarded.
             if (changesWereMade)
             {
                 facade.GetCompanyRepository().Update(comp);
                 facade.GetLogRepository().Add(newLog);
             }
 
-            return new HttpResponseMessage(HttpStatusCode.Created);
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpGet]
@@ -125,17 +131,11 @@ namespace CustomerAPI.Controllers
 
         }
 
+        //Checks wether the recieved employee is already within the company list of employees.
         private bool ContainsEmployee(Company comp, Employee emp)
         {
-            foreach (var compEmp in comp.Employees)
-            {
-                if (compEmp.Address.Equals(emp.Address) && compEmp.BirthDate == emp.BirthDate &&
-                    compEmp.FirstName.Equals(emp.FirstName) && compEmp.LastName.Equals(emp.LastName))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return comp.Employees.FirstOrDefault(c => c.Address.Equals(emp.Address) && c.BirthDate == emp.BirthDate && c.FirstName.Equals(emp.FirstName) 
+            && c.LastName.Equals(emp.LastName) && c.Company.Name.Equals(emp.Company.Name) && c.Phone.Equals(emp.Phone)) != null;
         }
     }
 }

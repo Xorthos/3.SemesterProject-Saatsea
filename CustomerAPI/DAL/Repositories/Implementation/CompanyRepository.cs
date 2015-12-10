@@ -143,6 +143,7 @@ namespace DAL.Context.Repositories.Implementation
             }
         }
 
+        //checks the recieved username and password against the database to see if the identity is present and if the password mathces.
         public bool AuthenticateCompany(string userName, string password)
         {
             var ctx = new Context();
