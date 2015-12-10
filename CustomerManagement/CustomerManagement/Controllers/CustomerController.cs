@@ -86,7 +86,7 @@ namespace CustomerManagement.Controllers
 
 
         [AuthorizeLogin]
-        public ActionResult Deactivate(int id)
+        public ActionResult ChangeState(int id)
         {
             facade.GetCompanyGateway((LoggedInModel)Session["LoginModel"]).ChangeState(id);
             return RedirectToAction("Index");
