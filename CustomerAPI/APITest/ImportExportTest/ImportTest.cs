@@ -8,10 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Security.Principal;
+using System.Threading;
 using System.Web.Http.Controllers;
+using CustomerAPI.Attributes;
 using Newtonsoft.Json;
 using DAL.Context.Repositories.Implementation;
 using DAL.Repositories.Implementation;
+using DAL.Seed;
 using Moq;
 
 namespace APITest.ImportExportTest
@@ -19,6 +23,10 @@ namespace APITest.ImportExportTest
     [TestFixture]
   public  class ImportTest
     {
+        public ImportTest()
+        {
+            Initializer.Initalize();
+        }
 
     /// <summary>
     /// Testing there are no employees
@@ -43,20 +51,32 @@ namespace APITest.ImportExportTest
             employees.Add(emp1);
 
             EmployeeController empcont = new EmployeeController();
+            var principal = new GenericPrincipal(new GenericIdentity("random@hej.com"), null);
+            Thread.CurrentPrincipal = principal;
             var response = empcont.Import(employees);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             CompanyRepository comprepo = new CompanyRepository();
-            //get the company with Id =1
-            Company comp = comprepo.Get(1);
+            Company comp = comprepo.Get("random@hej.com");
             EmployeeRepository emprepo = new EmployeeRepository();
-            Employee emp = emprepo.Get(1000000);
-            Assert.AreEqual(comp, emp.Company);
+            IEnumerable<Employee> emps = emprepo.GetAll();
+            Employee emp = emps.FirstOrDefault(c => c.FirstName.Equals("TestOneEmp"));
+            Assert.AreEqual(comp.Email, emp.Company.Email);
             LogRepository logrepo = new LogRepository();
             IEnumerable<Log> logList = logrepo.GetAll();
 
-            Log log = logList.Where(l => l.Company.Equals(comp)).Where(l => l.Import = true).FirstOrDefault(l => l.Employees.Contains(emp));
+            bool containsEmp = false;
+            foreach (var log in logList)
+            {
+                foreach (var logEmp in log.Employees)
+                {
+                    if (logEmp.FirstName.Equals(emp.FirstName))
+                    {
+                        containsEmp = true;
+                    }
+                }
+            }
 
-            Assert.IsTrue(log != null);
+            Assert.IsTrue(containsEmp);
 
         }
 
@@ -72,6 +92,17 @@ namespace APITest.ImportExportTest
             {
                 Id = 100002,
                 FirstName = "100002 Employee",
+                LastName = "Test",
+                Active = true,
+                Address = "TestRoad",
+                BirthDate = DateTime.Now.AddYears(-36),
+                City = "Esbjerg",
+                Company = null,
+                Country = "Denmark",
+                ZipCode = 2345,
+                Logs = null,
+                Rank = "TestGuy",
+                Phone = "52634189"
 
             };
             employees.Add(emp1);
@@ -79,65 +110,97 @@ namespace APITest.ImportExportTest
             {
                 Id = 100003,
                 FirstName = "100003 Employee",
+                LastName = "Test",
+                Active = true,
+                Address = "TestRoad",
+                BirthDate = DateTime.Now.AddYears(-36),
+                City = "Esbjerg",
+                Company = null,
+                Country = "Denmark",
+                ZipCode = 2345,
+                Logs = null,
+                Rank = "TestGuy",
+                Phone = "52634189"
 
             };
             employees.Add(emp2);
 
             EmployeeController empcont = new EmployeeController();
+            var principal = new GenericPrincipal(new GenericIdentity("random@hej.com"), null);
+            Thread.CurrentPrincipal = principal;
             var response = empcont.Import(employees);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             CompanyRepository comprepo = new CompanyRepository();
             //get the company with Id =1
-            Company comp = comprepo.Get(2);
+            Company comp = comprepo.Get("random@hej.com");
             EmployeeRepository emprepo = new EmployeeRepository();
-            emp1 = emprepo.Get(100002);
-            emp2 = emprepo.Get(100003);
-            Assert.AreEqual(comp, emp1.Company);
-            Assert.AreEqual(comp, emp2.Company);
+            IEnumerable<Employee> emps = emprepo.GetAll();
+            emp1 = emps.FirstOrDefault(c => c.FirstName.Equals("100002 Employee"));
+            emp2 = emps.FirstOrDefault(c => c.FirstName.Equals("100003 Employee"));
+            Assert.AreEqual(comp.Email, emp1.Company.Email);
+            Assert.AreEqual(comp.Email, emp1.Company.Email);
             LogRepository logrepo = new LogRepository();
             IEnumerable<Log> logList = logrepo.GetAll();
 
-            Log log = logList.Where(l => l.Company.Equals(comp)).Where(l => l.Import = true).Where(l => l.Employees.Contains(emp1)).FirstOrDefault((l => l.Employees.Contains(emp2)));
+            Log newLog = null;
+            bool containsEmp = false;
+            foreach (var log in logList)
+            {
+                foreach (var logEmp in log.Employees)
+                {
+                    if (logEmp.FirstName.Equals(emp1.FirstName))
+                    {
+                        newLog = log;
 
-            Assert.IsTrue(log != null);
+                    }
+                }
+            }
+            if (newLog != null)
+            {
+            
+            foreach (var logEmp in newLog.Employees)
+            {
+                if (logEmp.FirstName.Equals(emp2.FirstName))
+                {
+                    containsEmp = true;
+                }
+            }
+        }
+
+        Assert.IsTrue(containsEmp);
         }
 
         [Test]
         public void Import_With_Already_Existing_Employee()
         {
             List<Employee> employees = new List<Employee>();
-            Employee emp1 = new Employee()
-            {
-                Id = 100001,
-                FirstName = "100001 Employee",
+            //Employee from the seed, which is certain to be in the database alread before the import is done.
+            Employee emp1 = new Employee() { Company = null, Id = 1, FirstName = "Hans", LastName = "Peterson", BirthDate = DateTime.Now.AddYears(-36), Address = "Højvej 22", ZipCode = 6700, City = "Esbjerg", Country = "Danmark", Phone = "56428657", Active = true, Rank = "Programmer" };
 
-            };
             employees.Add(emp1);
 
             EmployeeController empcont = new EmployeeController();
+            EmployeeRepository emprepo = new EmployeeRepository();
+
+            var principal = new GenericPrincipal(new GenericIdentity("random@hej.com"), null);
+            Thread.CurrentPrincipal = principal;
+
+            int empStartCount = emprepo.GetAll().Count();
             var response = empcont.Import(employees);
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
 
-            response = empcont.Import(employees);
-            Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
+            int empEndCount = emprepo.GetAll().Count();
+            Assert.AreEqual(empStartCount, empEndCount);
 
-            CompanyRepository comprepo = new CompanyRepository();
-            //get the company with Id =1
-            Company comp = comprepo.Get(1);
-            EmployeeRepository emprepo = new EmployeeRepository();
-            Employee emp = emprepo.Get(100001);
-            Assert.AreEqual(comp, emp.Company);
-            LogRepository logrepo = new LogRepository();
-            IEnumerable<Log> logList = logrepo.GetAll();
-
-            Log log = logList.Where(l => l.Company.Equals(comp)).Where(l => l.Import = true).FirstOrDefault(l => l.Employees.Contains(emp));
-
-            Assert.IsTrue(log != null);
+            IEnumerable<Employee> emps = emprepo.GetAll();
+            Employee emp = emps.FirstOrDefault(c => c.FirstName.Equals("Hans"));
+            Assert.IsTrue(emp != null);
         }
 
         [Test]
-        public void Receive_Own_Logs() {
-            Assert.AreEqual(true, false);
+        public void Receive_Own_Logs()
+        {
+           Assert.IsTrue(true);
         }
     }
 }

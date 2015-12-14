@@ -134,8 +134,12 @@ namespace CustomerAPI.Controllers
         //Checks wether the recieved employee is already within the company list of employees.
         private bool ContainsEmployee(Company comp, Employee emp)
         {
-            return comp.Employees.FirstOrDefault(c => c.Address.Equals(emp.Address) && c.BirthDate == emp.BirthDate && c.FirstName.Equals(emp.FirstName) 
-            && c.LastName.Equals(emp.LastName) && c.Company.Name.Equals(emp.Company.Name) && c.Phone.Equals(emp.Phone)) != null;
+            bool contains = false;
+
+            contains = comp.Employees.FirstOrDefault(c => c.Address.Equals(emp.Address) && c.BirthDate.Year == emp.BirthDate.Year && c.BirthDate.Month == emp.BirthDate.Month && c.BirthDate.Day == emp.BirthDate.Day && c.FirstName.Equals(emp.FirstName) 
+            && c.LastName.Equals(emp.LastName) && c.Phone.Equals(emp.Phone)) != null;
+
+            return contains;
         }
     }
 }

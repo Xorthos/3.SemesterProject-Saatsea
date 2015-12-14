@@ -6,6 +6,7 @@ using System.Web;
 
 namespace CustomerAPI.Attributes
 {
+    [Serializable]
     public class BasicAuthenticationIdentity : GenericIdentity
     {
         public BasicAuthenticationIdentity(string name, string password)
