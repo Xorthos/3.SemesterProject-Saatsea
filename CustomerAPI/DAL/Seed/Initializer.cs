@@ -15,6 +15,7 @@ namespace DAL.Seed
 {
     public class Initializer : DropCreateDatabaseAlways<Context.Context>
     {
+        
         public Initializer()
         {
             //This should make the database initialise
@@ -23,8 +24,25 @@ namespace DAL.Seed
             cont.Database.Delete(); // the proper initializing doesn't work, so we use this.
             Context.Context context = new Context.Context();
 
+            
             InitializeDatabase(context);
             Seed(context);
+            MakeRelation();
+        }
+
+        /// <summary>
+        /// Makes a relation between the company and the Identity
+        /// </summary>
+        private void MakeRelation()
+        {
+            using (var ctx = new DAL.Context.Context())
+            {
+                UserManager<IdentityUser> um = new UserManager<IdentityUser>(new UserStore<IdentityUser>(ctx));
+                var user = um.FindByEmail("random@hej.com");
+                var company = ctx.Companies.FirstOrDefault();
+                company.Identity = user;
+                ctx.SaveChanges();
+            }
         }
 
         public static void Initalize()
@@ -34,6 +52,7 @@ namespace DAL.Seed
 
         public override void InitializeDatabase(DAL.Context.Context context)
         {
+           
             Company comp1 = new Company() { Id = 1, Name = "Random", PhoneNr = "23541365", Active =true};
             Company comp2 = new Company() {  Id = 2, Name = "douche", PhoneNr = "67352543",  Active = true};
             Company comp3 = new Company() {  Id = 3, Name = "Sup", PhoneNr = "85354256",  Active = true};
@@ -85,38 +104,39 @@ namespace DAL.Seed
             
             base.InitializeDatabase(context);
             
+
         }
 
         protected override void Seed(Context.Context context)
         {
-            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            rm.Create(new IdentityRole("Admin"));
-            rm.Create(new IdentityRole("Company"));
-            var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            var user = new ApplicationUser()
-            {
-                UserName = "admin@admin.com",
-                Email = "admin@admin.com"
-            };
-            um.Create(user, "_admin123");
+                var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
-            var newUser = um.FindByName("admin@admin.com");
+                rm.Create(new IdentityRole("Admin"));
+                rm.Create(new IdentityRole("Company"));
+                var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var user = new ApplicationUser()
+                {
+                    UserName = "admin@admin.com",
+                    Email = "admin@admin.com"
+                };
+                um.Create(user, "_admin123");
 
-            um.AddToRole(newUser.Id, "Admin");
+                var newUser = um.FindByName("admin@admin.com");
 
-            var compUser = new ApplicationUser()
-            {
-                UserName = "random@hej.com",
-                Email = "random@hej.com"
-            };
-            um.Create(compUser, "randompass");
+                um.AddToRole(newUser.Id, "Admin");
 
-            newUser = um.FindByName("random@hej.com");
+                var compUser = new ApplicationUser()
+                {
+                    UserName = "random@hej.com",
+                    Email = "random@hej.com"
+                };
+                um.Create(compUser, "randompass");
 
-            um.AddToRole(newUser.Id, "Company");
+                newUser = um.FindByName("random@hej.com");
 
-
-            base.Seed(context);
+                um.AddToRole(newUser.Id, "Company");
+            
+                base.Seed(context);
         }
     }
 }
