@@ -39,8 +39,7 @@ namespace DALTest.ModelsTest
             Company comp = new Company() {
                 Id = 1,
                 Name = "Big Company",
-                Zipcode =6700,
-                Email= "something@gmail.com",
+                
                 PhoneNr = "12345678",
                 Employees = employees,
                 Active = true,
@@ -49,8 +48,6 @@ namespace DALTest.ModelsTest
 
             Assert.AreEqual(comp.Id, 1);
             Assert.AreEqual(comp.Name, "Big Company");
-            Assert.AreEqual(comp.Zipcode, 6700);
-            Assert.AreEqual(comp.Email,"something@gmail.com");
             Assert.AreEqual(comp.PhoneNr, "12345678");
             Assert.AreEqual(comp.Employees, employees);
             Assert.AreEqual(comp.Active,true);
