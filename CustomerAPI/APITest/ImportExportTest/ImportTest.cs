@@ -132,7 +132,7 @@ namespace APITest.ImportExportTest
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
             CompanyRepository comprepo = new CompanyRepository();
             //get the company with Id =1
-            Company comp = comprepo.Get("random@hej.com");
+            Company comp = comprepo.Get("random@hej.com"); //this fails because the seeded data doesn't have a identity.
             EmployeeRepository emprepo = new EmployeeRepository();
             IEnumerable<Employee> emps = emprepo.GetAll();
             emp1 = emps.FirstOrDefault(c => c.FirstName.Equals("100002 Employee"));
