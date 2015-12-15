@@ -2,25 +2,24 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Context.Models;
+using System.Web;
+using DAL.Models;
 
-namespace DAL.Models
+namespace CustomerAPI.Models
 {
-  public class Log
-    {   
+    public class ViewCompany
+    {
         [Key]
         public int Id { get; set; }
-        public virtual Company Company { get; set; }
         [Required]
-        public DateTime Date { get; set; }
+        public string Name { get; set; }
         [Required]
-        public bool Import { get; set; }
+        public string Email { get; set; }
+        [Required]
+        public string PhoneNr { get; set; }
         public virtual List<Employee> Employees { get; set; }
         [Required]
         public bool Active { get; set; }
-        [Required]
-        public LogState LogState { get; set; }
+        public string AccessString { get; set; }
     }
 }

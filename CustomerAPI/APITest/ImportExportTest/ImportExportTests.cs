@@ -67,7 +67,7 @@ namespace APITest.ImportExportTest
             EmployeeRepository emprepo = new EmployeeRepository();
             IEnumerable<Employee> emps = emprepo.GetAll();
             Employee emp = emps.FirstOrDefault(c => c.FirstName.Equals("TestOneEmp"));
-            Assert.AreEqual(comp.Email, emp.Company.Email);
+            Assert.AreEqual(comp.Identity.Email, emp.Company.Identity.Email);
             LogRepository logrepo = new LogRepository();
             IEnumerable<Log> logList = logrepo.GetAll();
 
@@ -144,8 +144,8 @@ namespace APITest.ImportExportTest
             IEnumerable<Employee> emps = emprepo.GetAll();
             emp1 = emps.FirstOrDefault(c => c.FirstName.Equals("100002 Employee"));
             emp2 = emps.FirstOrDefault(c => c.FirstName.Equals("100003 Employee"));
-            Assert.AreEqual(comp.Email, emp1.Company.Email);
-            Assert.AreEqual(comp.Email, emp1.Company.Email);
+            Assert.AreEqual(comp.Identity.Email, emp1.Company.Identity.Email);
+            Assert.AreEqual(comp.Identity.Email, emp2.Company.Identity.Email);
             LogRepository logrepo = new LogRepository();
             IEnumerable<Log> logList = logrepo.GetAll();
 
@@ -248,7 +248,7 @@ namespace APITest.ImportExportTest
             bool logCreated = false;
             foreach (var log in logList)
             {
-                if (!log.Import && log.Company.Email.Equals("douche@hej.com") && log.Employees.Count == 5)
+                if (!log.Import && log.Company.Identity.Email.Equals("douche@hej.com") && log.Employees.Count == 5)
                 {
                     logCreated = true;
                 }
@@ -276,7 +276,7 @@ namespace APITest.ImportExportTest
             bool logCreated = false;
             foreach (var log in logList)
             {
-                if (!log.Import && log.Company.Email.Equals("house@hej.com") && log.Employees.Count == 0)
+                if (!log.Import && log.Company.Identity.Email.Equals("house@hej.com") && log.Employees.Count == 0)
                 {
                     logCreated = true;
                 }

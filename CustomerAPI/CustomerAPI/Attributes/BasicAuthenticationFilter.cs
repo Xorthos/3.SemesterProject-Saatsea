@@ -9,6 +9,9 @@ using System.Threading;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using Context.Models;
+using DAL.Facade.Implementation;
+using DAL.Models;
 
 namespace CustomerAPI.Attributes
 {
@@ -55,6 +58,20 @@ namespace CustomerAPI.Attributes
                 var identity = ParseAuthorizationHeader(actionContext);
                 if (identity == null)
                 {
+                    string uri = actionContext.Request.RequestUri.AbsolutePath;
+                    Facade facade = new Facade();
+
+                    if (uri.ToLower().Contains("import"))
+                    {
+                        facade.GetLogRepository()
+                            .Add(new Log() { Active = true, Date = DateTime.Now, Import = true, LogState = LogState.unknown });
+                    }
+                    else
+                    {
+                        facade.GetLogRepository()
+                            .Add(new Log() { Active = true, Date = DateTime.Now, Import = false, LogState = LogState.unknown });
+                    }
+
                     Challenge(actionContext);
                     return;
                 }

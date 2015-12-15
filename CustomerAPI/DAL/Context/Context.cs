@@ -33,5 +33,14 @@ namespace DAL.Context
             this.Configuration.LazyLoadingEnabled = false;
         }
         #endregion
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //modelBuilder.Entity<IdentityUser>().HasKey(m => m.Id);
+
+            //modelBuilder.Entity<Company>().HasRequired(c => c.IdentityId) // Create inverse relationship
+            //    .WithOptional();
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

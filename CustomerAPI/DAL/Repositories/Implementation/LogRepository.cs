@@ -16,10 +16,18 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new Context.Context())
             {
-                
-                foreach (var empl in item.Employees)
+                if (item.Employees != null)
                 {
-                    ctx.Employees.Attach(empl);
+                    foreach (var empl in item.Employees)
+                    {
+                        ctx.Employees.Attach(empl);
+                        //ctx.Entry(empl.Company).State = EntityState.Detached;
+                    }
+                }
+                if (item.Company != null)
+                {
+                    ctx.Users.Attach(item.Company.Identity);
+                    ctx.Companies.Attach(item.Company);
                 }
 
                 var result = ctx.Logs.Add(item);
@@ -32,7 +40,7 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new Context.Context())
             {
-                return ctx.Logs.Include("Employees").Include("Company").ToList();
+                return ctx.Logs.Include("Employees").Include(c => c.Company.Identity).ToList();
             }
         }
 
@@ -41,7 +49,7 @@ namespace DAL.Repositories.Implementation
             using (var ctx = new Context.Context())
             {
 
-                return ctx.Logs.Include("Company").Include("Employees").FirstOrDefault(c => c.Id == id && c.Active);
+                return ctx.Logs.Include(c => c.Company.Identity).Include("Employees").FirstOrDefault(c => c.Id == id && c.Active);
             }
         }
 

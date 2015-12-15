@@ -15,6 +15,7 @@ namespace DAL.Seed
 {
     public class Initializer : DropCreateDatabaseAlways<Context.Context>
     {
+        
         public Initializer()
         {
             //This should make the database initialise
@@ -22,8 +23,38 @@ namespace DAL.Seed
             //cont.Database.Initialize(true);
             cont.Database.Delete(); // the proper initializing doesn't work, so we use this.
             Context.Context context = new Context.Context();
+
+            
             InitializeDatabase(context);
             Seed(context);
+            MakeRelation();
+        }
+
+        /// <summary>
+        /// Makes a relation between the company and the Identity
+        /// </summary>
+        private void MakeRelation()
+        {
+            using (var ctx = new DAL.Context.Context())
+            {
+                UserManager<IdentityUser> um = new UserManager<IdentityUser>(new UserStore<IdentityUser>(ctx));
+                var user = um.FindByEmail("random@hej.com");
+                var company = ctx.Companies.FirstOrDefault(c => c.Name.Equals("Random"));
+                company.Identity = user;
+
+                var user2 = um.FindByEmail("douche@hej.com");
+                var company2 = ctx.Companies.FirstOrDefault(c => c.Name.Equals("Douche"));
+                company2.Identity = user2;
+
+                var user3 = um.FindByEmail("sup@hej.com");
+                var company3 = ctx.Companies.FirstOrDefault(c => c.Name.Equals("Sup"));
+                company3.Identity = user3;
+
+                var user4 = um.FindByEmail("house@hej.com");
+                var company4 = ctx.Companies.FirstOrDefault(c => c.Name.Equals("House"));
+                company4.Identity = user4;
+                ctx.SaveChanges();
+            }
         }
 
         public static void Initalize()
@@ -31,14 +62,12 @@ namespace DAL.Seed
             Database.SetInitializer(new Initializer());
         }
 
-        
-
         public override void InitializeDatabase(DAL.Context.Context context)
         {
-            Company comp1 = new Company() { Email = "random@hej.com", Id = 1, Name = "Random", PhoneNr = "23541365", Zipcode = 2354 ,Active =true};
-            Company comp2 = new Company() { Email = "douche@hej.com", Id = 2, Name = "douche", PhoneNr = "67352543", Zipcode = 1323, Active = true };
-            Company comp3 = new Company() { Email = "supster@hej.com", Id = 3, Name = "Sup", PhoneNr = "85354256", Zipcode = 5231, Active = true };
-            Company comp4 = new Company() { Email = "house@hej.com", Id = 4, Name = "House", PhoneNr = "56123465", Zipcode = 5615, Active = true};
+            Company comp1 = new Company() { Id = 1, Name = "Random", PhoneNr = "23541365", Active =true};
+            Company comp2 = new Company() { Id = 2, Name = "Douche", PhoneNr = "67352543", Active = true };
+            Company comp3 = new Company() { Id = 3, Name = "Sup", PhoneNr = "85354256", Active = true };
+            Company comp4 = new Company() { Id = 4, Name = "House", PhoneNr = "56123465", Active = true};
 
             Employee emp1 = context.Employees.Add(new Employee() { Company = comp1, Id = 1, FirstName = "Hans", LastName = "Peterson", BirthDate = DateTime.Now.AddYears(-36), Address = "Højvej 22", ZipCode = 6700, City = "Esbjerg", Country = "Danmark", Phone = "56428657", Active = true, Rank = "Programmer" });
             Employee emp2 = context.Employees.Add(new Employee() { Company = comp1, Id = 1, FirstName = "Grete", LastName = "Peterson", BirthDate = DateTime.Now.AddYears(-36), Address = "esbjerg vej 53", ZipCode = 6700, City = "Esbjerg", Country = "Danmark", Phone = "45732137", Active = true, Rank = "Cisco god" });
@@ -87,36 +116,34 @@ namespace DAL.Seed
             
             base.InitializeDatabase(context);
             
+
         }
 
         protected override void Seed(Context.Context context)
         {
-            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            rm.Create(new IdentityRole("Admin"));
-            rm.Create(new IdentityRole("Company"));
-            var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            var user = new ApplicationUser()
-            {
-                UserName = "admin@admin.com",
-                Email = "admin@admin.com"
-            };
-            um.Create(user, "_admin123");
+                var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
-            var newUser = um.FindByName("admin@admin.com");
+                rm.Create(new IdentityRole("Admin"));
+                rm.Create(new IdentityRole("Company"));
+                var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var user = new ApplicationUser()
+                {
+                    UserName = "admin@admin.com",
+                    Email = "admin@admin.com"
+                };
+                um.Create(user, "_admin123");
 
-            um.AddToRole(newUser.Id, "Admin");
+                var newUser = um.FindByName("admin@admin.com");
 
-            var compUser = new ApplicationUser()
-            {
-                UserName = "random@hej.com",
-                Email = "random@hej.com"
-            };
-            um.Create(compUser, "randompass");
+                um.AddToRole(newUser.Id, "Admin");
 
-            newUser = um.FindByName("random@hej.com");
-
-            um.AddToRole(newUser.Id, "Company");
-
+                var compUser = new ApplicationUser()
+                {
+                    UserName = "random@hej.com",
+                    Email = "random@hej.com"
+                };
+                um.Create(compUser, "randompass");
+            
             compUser = new ApplicationUser()
             {
                 UserName = "house@hej.com",
@@ -127,7 +154,32 @@ namespace DAL.Seed
             newUser = um.FindByName("house@hej.com");
 
             um.AddToRole(newUser.Id, "Company");
+            
+                newUser = um.FindByName("random@hej.com");
 
+                um.AddToRole(newUser.Id, "Company");
+
+            compUser = new ApplicationUser()
+            {
+                UserName = "sup@hej.com",
+                Email = "sup@hej.com"
+            };
+            um.Create(compUser, "suppass");
+
+            newUser = um.FindByName("sup@hej.com");
+
+            um.AddToRole(newUser.Id, "Company");
+
+            compUser = new ApplicationUser()
+            {
+                UserName = "douche@hej.com",
+                Email = "douche@hej.com"
+            };
+            um.Create(compUser, "douchepass");
+
+            newUser = um.FindByName("douche@hej.com");
+
+            um.AddToRole(newUser.Id, "Company");
 
             base.Seed(context);
         }

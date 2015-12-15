@@ -25,8 +25,7 @@ namespace DAL.Context.Repositories.Implementation
         public Company Add(Company item)
         {
             using (var ctx = new Context())
-            {  
-                
+            {
                 var result = ctx.Companies.Add(item);
                 
                 ctx.SaveChanges();
@@ -46,7 +45,7 @@ namespace DAL.Context.Repositories.Implementation
             {
               
                 //var result=ctx.Companies.Where(c=> c.Active).Include("Employees").ToList();
-                var result = ctx.Companies.Include("Employees").ToList();
+                var result = ctx.Companies.Include("Employees").Include("Identity").ToList();
                
                 return result;
             }
@@ -61,7 +60,7 @@ namespace DAL.Context.Repositories.Implementation
         {
             using (var ctx = new Context())
             {
-                return ctx.Companies.Include("Employees").FirstOrDefault(c => c.Id == id);
+                return ctx.Companies.Include("Employees").Include("Identity").FirstOrDefault(c => c.Id == id);
             }
         }
 
@@ -74,7 +73,7 @@ namespace DAL.Context.Repositories.Implementation
         {
             using (var ctx = new Context())
             {
-                return ctx.Companies.Include("Employees").FirstOrDefault(c => c.Email.Equals(email));
+                return ctx.Companies.Include("Employees").Include("Identity").FirstOrDefault(c => c.Identity.Email.Equals(email));
             }
         }
 
@@ -105,7 +104,6 @@ namespace DAL.Context.Repositories.Implementation
                     result.Employees = item.Employees;
                     result.Name = item.Name;
                     result.PhoneNr = item.PhoneNr;
-                    result.Zipcode = item.Zipcode;
 
                     ctx.Entry(result).State = EntityState.Modified;
 

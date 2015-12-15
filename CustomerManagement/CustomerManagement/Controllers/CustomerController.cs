@@ -75,7 +75,7 @@ namespace CustomerManagement.Controllers
             Company theCompany = (facade.GetCompanyGateway((LoggedInModel)Session["LoginModel"]).Get(comp.ID));
             theCompany.Name = comp.Name;
             theCompany.PhoneNr = comp.PhoneNr;
-            theCompany.Zipcode = comp.Zipcode;
+
             facade.GetCompanyGateway((LoggedInModel)Session["LoginModel"]).Update(theCompany);
 
            

@@ -20,8 +20,6 @@ namespace DALTest.ModelsTest
             {
                 Id = 1,
                 Name = "Big Company",
-                Zipcode = 6700,
-                Email = "something@gmail.com",
                 PhoneNr = "12345678",
                 Active = true,
 
