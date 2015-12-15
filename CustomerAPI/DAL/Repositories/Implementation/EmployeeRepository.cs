@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new Context.Context())
             {
-                return ctx.Employees.Include("Logs").Include("Company").ToList();
+                return ctx.Employees.Include("Logs").Include(c => c.Company.Identity).ToList();
             }
         }
 
@@ -50,7 +51,7 @@ namespace DAL.Repositories.Implementation
         {
             using (var ctx = new Context.Context())
             {
-                return ctx.Employees.Include("Logs").Include("Company").FirstOrDefault(c => c.Id == id && c.Active);
+                return ctx.Employees.Include(c => c.Company.Identity).Include("Logs").FirstOrDefault(c => c.Id == id && c.Active);
             }
         }
 

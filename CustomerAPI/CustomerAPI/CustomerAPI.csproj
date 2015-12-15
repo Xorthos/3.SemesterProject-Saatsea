@@ -235,6 +235,7 @@
     <Compile Include="Attributes\BasicAuthenticationIdentity.cs" />
     <Compile Include="Attributes\BasicAuthenticationFilter.cs" />
     <Compile Include="Attributes\MyBasicAuthenticationFilter.cs" />
+    <Compile Include="BLL\ImportExportLogic.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />

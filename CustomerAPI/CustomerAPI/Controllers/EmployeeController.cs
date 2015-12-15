@@ -9,6 +9,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Http;
 using CustomerAPI.Attributes;
+using CustomerAPI.BLL;
 using DAL.Facade.Abstraction;
 using DAL.Facade.Implementation;
 using DAL.Models;
@@ -80,40 +81,12 @@ namespace CustomerAPI.Controllers
         [Route("api/employee/import")]
         public HttpResponseMessage Import(IEnumerable<Employee> Employees)
         {
-            if (Employees == null || !Employees.Any())
+            ImportExportLogic imEx = new ImportExportLogic();
+            if (imEx.Import(Employees))
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
-
-            
-            Company comp = facade.GetCompanyRepository().Get(Thread.CurrentPrincipal.Identity.Name);
-            Log newLog = new Log() {Company = comp, Active = true, Date = DateTime.Now, Import = true, Employees = new List<Employee>()};
-
-            //Runs through every employee from the import list and checks if they are already present in the system.
-            bool changesWereMade = false;
-            foreach (var emp in Employees)
-            {
-                //Checks if the employee is already in the system.
-                if (!ContainsEmployee(comp, emp))
-                {
-                    //If it is not in the system the nessecary changes will be made.
-                    changesWereMade = true;
-                    emp.Company = comp;
-                    Employee newEmp = facade.GetEmployeeRepository().Add(emp);
-                    comp.Employees.Add(newEmp);
-                    newLog.Employees.Add(newEmp);
-                }
-                
-            }
-
-            //If changes were made the company will be updated and the new log will be saved. Otherwise it will be discarded.
-            if (changesWereMade)
-            {
-                facade.GetCompanyRepository().Update(comp);
-                facade.GetLogRepository().Add(newLog);
-            }
-
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
 
         [HttpGet]
@@ -122,24 +95,18 @@ namespace CustomerAPI.Controllers
         [Route("api/employee/export")]
         public HttpResponseMessage Export()
         {
+            ImportExportLogic imEx = new ImportExportLogic();
 
-            Company comp = facade.GetCompanyRepository().Get(Thread.CurrentPrincipal.Identity.Name);
-            Log newLog = new Log() { Company = comp, Active = true, Date = DateTime.Now, Import = false, Employees = comp.Employees };
-            facade.GetLogRepository().Add(newLog);
+            List<Employee> emps = imEx.Export();
 
-            return Request.CreateResponse(HttpStatusCode.OK, comp.Employees);
+            if (emps != null && emps.Count != 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, emps);
+            }
 
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
-        //Checks wether the recieved employee is already within the company list of employees.
-        private bool ContainsEmployee(Company comp, Employee emp)
-        {
-            bool contains = false;
-
-            contains = comp.Employees.FirstOrDefault(c => c.Address.Equals(emp.Address) && c.BirthDate.Year == emp.BirthDate.Year && c.BirthDate.Month == emp.BirthDate.Month && c.BirthDate.Day == emp.BirthDate.Day && c.FirstName.Equals(emp.FirstName) 
-            && c.LastName.Equals(emp.LastName) && c.Phone.Equals(emp.Phone)) != null;
-
-            return contains;
-        }
+        
     }
 }

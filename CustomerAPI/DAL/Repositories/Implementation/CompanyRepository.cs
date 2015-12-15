@@ -73,7 +73,7 @@ namespace DAL.Context.Repositories.Implementation
         {
             using (var ctx = new Context())
             {
-                return ctx.Companies.Include("Employees").FirstOrDefault(c => c.Identity.Email.Equals(email));
+                return ctx.Companies.Include("Employees").Include("Identity").FirstOrDefault(c => c.Identity.Email.Equals(email));
             }
         }
 

@@ -39,8 +39,20 @@ namespace DAL.Seed
             {
                 UserManager<IdentityUser> um = new UserManager<IdentityUser>(new UserStore<IdentityUser>(ctx));
                 var user = um.FindByEmail("random@hej.com");
-                var company = ctx.Companies.FirstOrDefault();
+                var company = ctx.Companies.FirstOrDefault(c => c.Name.Equals("Random"));
                 company.Identity = user;
+
+                var user2 = um.FindByEmail("douche@hej.com");
+                var company2 = ctx.Companies.FirstOrDefault(c => c.Name.Equals("Douche"));
+                company2.Identity = user2;
+
+                var user3 = um.FindByEmail("sup@hej.com");
+                var company3 = ctx.Companies.FirstOrDefault(c => c.Name.Equals("Sup"));
+                company3.Identity = user3;
+
+                var user4 = um.FindByEmail("house@hej.com");
+                var company4 = ctx.Companies.FirstOrDefault(c => c.Name.Equals("House"));
+                company4.Identity = user4;
                 ctx.SaveChanges();
             }
         }
@@ -52,10 +64,10 @@ namespace DAL.Seed
 
         public override void InitializeDatabase(DAL.Context.Context context)
         {
-           
             Company comp1 = new Company() { Id = 1, Name = "Random", PhoneNr = "23541365", Active =true};
-            Company comp2 = new Company() {  Id = 2, Name = "douche", PhoneNr = "67352543",  Active = true};
-            Company comp3 = new Company() {  Id = 3, Name = "Sup", PhoneNr = "85354256",  Active = true};
+            Company comp2 = new Company() { Id = 2, Name = "Douche", PhoneNr = "67352543", Active = true };
+            Company comp3 = new Company() { Id = 3, Name = "Sup", PhoneNr = "85354256", Active = true };
+            Company comp4 = new Company() { Id = 4, Name = "House", PhoneNr = "56123465", Active = true};
 
             Employee emp1 = context.Employees.Add(new Employee() { Company = comp1, Id = 1, FirstName = "Hans", LastName = "Peterson", BirthDate = DateTime.Now.AddYears(-36), Address = "Højvej 22", ZipCode = 6700, City = "Esbjerg", Country = "Danmark", Phone = "56428657", Active = true, Rank = "Programmer" });
             Employee emp2 = context.Employees.Add(new Employee() { Company = comp1, Id = 1, FirstName = "Grete", LastName = "Peterson", BirthDate = DateTime.Now.AddYears(-36), Address = "esbjerg vej 53", ZipCode = 6700, City = "Esbjerg", Country = "Danmark", Phone = "45732137", Active = true, Rank = "Cisco god" });
@@ -78,17 +90,18 @@ namespace DAL.Seed
             comp1.Employees = new List<Employee>() { emp1, emp2, emp3, emp4, emp5 };
             comp2.Employees = new List<Employee>() { emp6, emp7, emp8, emp9, emp10 };
             comp3.Employees = new List<Employee>() { emp11, emp12, emp13, emp14, emp15, emp16 };
+            comp4.Employees = new List<Employee>();
 
             context.Companies.Add(comp1);
             context.Companies.Add(comp2);
             context.Companies.Add(comp3);
+            context.Companies.Add(comp4);
 
             List<Employee> empList1 = new List<Employee>() { emp1, emp2, emp3 };
             List<Employee> empList2 = new List<Employee>() { emp6, emp7, emp8, emp9, emp10 };
             List<Employee> empList3 = new List<Employee>() { emp11, emp12, emp13 };
             List<Employee> empList4 = new List<Employee>() { emp14, emp15 };
             List<Employee> empList5 = new List<Employee>() { emp4, emp5 };
-            List<Employee> empList6 = new List<Employee>() { emp6, emp7, emp8, emp9, emp10 };
             List<Employee> empList7 = new List<Employee>() { emp1, emp2, emp3, emp4, emp5 };
             List<Employee> empList8 = new List<Employee>() { emp16 };
 
@@ -97,7 +110,6 @@ namespace DAL.Seed
             context.Logs.Add(new Log() { Company = comp3, Employees = empList3, Date = DateTime.Now, Id = 3, Import = true, Active = true });
             context.Logs.Add(new Log() { Company = comp3, Employees = empList4, Date = DateTime.Now, Id = 4, Import = true, Active = true });
             context.Logs.Add(new Log() { Company = comp1, Employees = empList5, Date = DateTime.Now, Id = 5, Import = true, Active = true });
-            context.Logs.Add(new Log() { Company = comp2, Employees = empList6, Date = DateTime.Now, Id = 6, Import = false, Active = true });
             context.Logs.Add(new Log() { Company = comp1, Employees = empList7, Date = DateTime.Now, Id = 7, Import = false, Active = true });
             context.Logs.Add(new Log() { Company = comp3, Employees = empList8, Date = DateTime.Now, Id = 8, Import = true, Active = true });
 
@@ -131,12 +143,45 @@ namespace DAL.Seed
                     Email = "random@hej.com"
                 };
                 um.Create(compUser, "randompass");
+            
+            compUser = new ApplicationUser()
+            {
+                UserName = "house@hej.com",
+                Email = "house@hej.com"
+            };
+            um.Create(compUser, "housepass");
 
+            newUser = um.FindByName("house@hej.com");
+
+            um.AddToRole(newUser.Id, "Company");
+            
                 newUser = um.FindByName("random@hej.com");
 
                 um.AddToRole(newUser.Id, "Company");
-            
-                base.Seed(context);
+
+            compUser = new ApplicationUser()
+            {
+                UserName = "sup@hej.com",
+                Email = "sup@hej.com"
+            };
+            um.Create(compUser, "suppass");
+
+            newUser = um.FindByName("sup@hej.com");
+
+            um.AddToRole(newUser.Id, "Company");
+
+            compUser = new ApplicationUser()
+            {
+                UserName = "douche@hej.com",
+                Email = "douche@hej.com"
+            };
+            um.Create(compUser, "douchepass");
+
+            newUser = um.FindByName("douche@hej.com");
+
+            um.AddToRole(newUser.Id, "Company");
+
+            base.Seed(context);
         }
     }
 }
