@@ -67,6 +67,7 @@
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\AuthorizationModels\LoginModel.cs" />
     <Compile Include="Models\AuthorizationModels\RegisterModel.cs" />
+    <Compile Include="Models\LogState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceGateway\Abstraction\ServiceGateway.cs" />
     <Compile Include="ServiceGateway\Implementation\CompanyGateway.cs" />

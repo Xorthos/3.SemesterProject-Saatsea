@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using CustomerManagement.Attributes;
+using CustomerManagement.Models;
 using Proxy.Facade.Abstraction;
 using Proxy.Facade.Implementation;
 using Proxy.Models;
@@ -18,7 +19,30 @@ namespace CustomerManagement.Controllers
         [AuthorizeLogin]
         public ActionResult Index()
         {
-            return View(facade.GetLogGateway((LoggedInModel)Session["LoginModel"]).GetAll());
+            var result = new SortedLogModel((List<Log>) facade.GetLogGateway((LoggedInModel) Session["LoginModel"]).GetAll());
+            if (Request.Form["SortCriteria"] != null)
+            {
+                foreach (var item in Enum.GetValues(typeof(SortCriteria)))
+                {
+                    if (item.ToString().Equals(Request.Form["SortCriteria"]))
+                    {
+                        result.SortCriteria = (SortCriteria) item;
+                    }
+                }
+            }
+
+            if (Request.Form["LogState"] != null)
+            {
+                foreach (var item in Enum.GetValues(typeof(LogState)))
+                {
+                    if (item.ToString().Equals(Request.Form["LogState"]))
+                    {
+                        result.SortCriteria = (SortCriteria)item;
+                    }
+                }
+            }
+
+            return View(result);
         }
 
         [AuthorizeLogin]

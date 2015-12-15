@@ -185,6 +185,8 @@
     <Compile Include="Models\CreateCompanyModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\SortCriteria.cs" />
+    <Compile Include="Models\SortedLogModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
