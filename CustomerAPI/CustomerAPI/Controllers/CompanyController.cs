@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using DAL.Context;
 using Microsoft.AspNet.Identity;
 using Context.Models;
+using CustomerAPI.Models;
 
 namespace CustomerAPI.Controllers
 {
@@ -37,7 +38,8 @@ namespace CustomerAPI.Controllers
         [HttpGet]
         public HttpResponseMessage GetAll()
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, repository.GetAll());
+            var companyGenerator = new CompanyGenerator();
+            var response = Request.CreateResponse(HttpStatusCode.OK, companyGenerator.ParseCompanyRange(repository.GetAll()));
             return response;
         }
 
@@ -49,7 +51,8 @@ namespace CustomerAPI.Controllers
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
-            var response = Request.CreateResponse(HttpStatusCode.OK, repository.Get(id));
+            var companyGenerator = new CompanyGenerator();
+            var response = Request.CreateResponse(HttpStatusCode.OK, companyGenerator.ParseCompany(repository.Get(id)));
             return response;
         }
 
@@ -59,22 +62,11 @@ namespace CustomerAPI.Controllers
         /// <param name="comp">the company to add</param>
         /// <returns>the company added with the primary key.</returns>
         [HttpPost]
-        public HttpResponseMessage Add(Company comp)
+        public HttpResponseMessage Add(ViewCompany comp)
         {
-            var password = System.Web.Security.Membership.GeneratePassword(10,10);
-            var um = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new DAL.Context.Context()));
-            var user = new ApplicationUser()
-            {   
-
-                UserName = comp.Email,
-                Email = comp.Email
-            };
+            var companyGenerator = new CompanyGenerator();
             
-            um.Create(user, password);
-            var bytes = System.Text.Encoding.UTF8.GetBytes(comp.Email+":"+ password);
-            comp.AccessString = System.Convert.ToBase64String(bytes);
-            comp.Active = true;
-            var response = Request.CreateResponse(HttpStatusCode.OK, repository.Add(comp));
+            var response = Request.CreateResponse(HttpStatusCode.OK, companyGenerator.ParseCompany(repository.Add(companyGenerator.GenerateCompany(comp,15,10))));
             return response;
         }
 
@@ -84,10 +76,13 @@ namespace CustomerAPI.Controllers
         /// <param name="comp">the company to be updated</param>
         /// <returns>true if the company was successfully updated</returns>
         [HttpPut]
-        public HttpResponseMessage Update(Company comp)
+        public HttpResponseMessage Update(ViewCompany comp)
         {
+            var companyGenerator = new CompanyGenerator();
+
+            var company = companyGenerator.ParseViewCompany(comp);
             HttpResponseMessage response;
-            if (repository.Update(comp))
+            if (repository.Update(company))
             {
                 response = Request.CreateResponse(HttpStatusCode.OK, true);
             }

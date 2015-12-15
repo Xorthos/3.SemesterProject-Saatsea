@@ -22,6 +22,7 @@ namespace DAL.Seed
             //cont.Database.Initialize(true);
             cont.Database.Delete(); // the proper initializing doesn't work, so we use this.
             Context.Context context = new Context.Context();
+
             InitializeDatabase(context);
             Seed(context);
         }
@@ -31,13 +32,11 @@ namespace DAL.Seed
             Database.SetInitializer(new Initializer());
         }
 
-        
-
         public override void InitializeDatabase(DAL.Context.Context context)
         {
-            Company comp1 = new Company() { Email = "random@hej.com", Id = 1, Name = "Random", PhoneNr = "23541365", Zipcode = 2354 ,Active =true};
-            Company comp2 = new Company() { Email = "douche@hej.com", Id = 2, Name = "douche", PhoneNr = "67352543", Zipcode = 1323, Active = true };
-            Company comp3 = new Company() { Email = "supster@hej.com", Id = 3, Name = "Sup", PhoneNr = "85354256", Zipcode = 5231, Active = true };
+            Company comp1 = new Company() { Id = 1, Name = "Random", PhoneNr = "23541365", Active =true};
+            Company comp2 = new Company() {  Id = 2, Name = "douche", PhoneNr = "67352543",  Active = true};
+            Company comp3 = new Company() {  Id = 3, Name = "Sup", PhoneNr = "85354256",  Active = true};
 
             Employee emp1 = context.Employees.Add(new Employee() { Company = comp1, Id = 1, FirstName = "Hans", LastName = "Peterson", BirthDate = DateTime.Now.AddYears(-36), Address = "Højvej 22", ZipCode = 6700, City = "Esbjerg", Country = "Danmark", Phone = "56428657", Active = true, Rank = "Programmer" });
             Employee emp2 = context.Employees.Add(new Employee() { Company = comp1, Id = 1, FirstName = "Grete", LastName = "Peterson", BirthDate = DateTime.Now.AddYears(-36), Address = "esbjerg vej 53", ZipCode = 6700, City = "Esbjerg", Country = "Danmark", Phone = "45732137", Active = true, Rank = "Cisco god" });
