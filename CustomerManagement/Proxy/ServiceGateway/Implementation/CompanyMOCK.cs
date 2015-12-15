@@ -34,7 +34,7 @@ namespace Proxy.ServiceGateway.Implementation
             comp.Email = item.Email;
             comp.Name = item.Name;
             comp.PhoneNr = item.PhoneNr;
-            comp.Zipcode = item.Zipcode;
+          
             return true;
         }
 

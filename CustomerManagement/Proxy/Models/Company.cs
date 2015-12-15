@@ -14,7 +14,7 @@ namespace Proxy.Models
         [Display(Name = "Name")]
         [Required(ErrorMessage = "The name is required")]
         public string Name { get; set; }
-        public int Zipcode { get; set; }
+       
         [Display(Name = "Email address")]
         [Required(ErrorMessage = "The email address is required")]
         [EmailAddress(ErrorMessage = "Invalid Email Address")]

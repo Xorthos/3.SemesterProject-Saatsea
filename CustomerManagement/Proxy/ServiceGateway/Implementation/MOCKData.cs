@@ -15,9 +15,9 @@ namespace Proxy.ServiceGateway.Implementation
 
         public static void InitMOCKData()
         {
-            Company comp1 = new Company() {Email = "random@hej.com", ID = 1, Name = "Random", PhoneNr = "23541365", Zipcode = 2354};
-            Company comp2 = new Company() { Email = "douche@hej.com", ID = 2, Name = "douche", PhoneNr = "67352543", Zipcode = 1323 };
-            Company comp3 = new Company() { Email = "supster@hej.com", ID = 3, Name = "Sup", PhoneNr = "85354256", Zipcode = 5231 };
+            Company comp1 = new Company() {Email = "random@hej.com", ID = 1, Name = "Random", PhoneNr = "23541365"};
+            Company comp2 = new Company() { Email = "douche@hej.com", ID = 2, Name = "douche", PhoneNr = "67352543"};
+            Company comp3 = new Company() { Email = "supster@hej.com", ID = 3, Name = "Sup", PhoneNr = "85354256" };
 
             Employee emp1 = new Employee() {Company = comp1, Id = 1, FirstName = "Hans", LastName = "Peterson", BirthDate = DateTime.Now.AddYears(-36), Address = "Højvej 22", ZipCode = 6700, City = "Esbjerg", Country = "Danmark", Phone = "56428657", Active = true, Rank = "Programmer"};
             Employee emp2 = new Employee() { Company = comp1, Id = 1, FirstName = "Grete", LastName = "Peterson", BirthDate = DateTime.Now.AddYears(-36), Address = "esbjerg vej 53", ZipCode = 6700, City = "Esbjerg", Country = "Danmark", Phone = "45732137", Active = true, Rank = "Cisco god" };
