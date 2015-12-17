@@ -17,31 +17,20 @@ namespace CustomerManagement.Controllers
         
         IFacade facade = new Facade();
         [AuthorizeLogin]
-        public ActionResult Index()
+        public ActionResult Index(SortCriteria? sortCriteria, LogState? logState)
         {
-            var result = new SortedLogModel((List<Log>) facade.GetLogGateway((LoggedInModel) Session["LoginModel"]).GetAll());
-            if (Request.Form["SortCriteria"] != null)
+            var result = new SortedLogModel();
+                
+            if (sortCriteria != null)
             {
-                foreach (var item in Enum.GetValues(typeof(SortCriteria)))
-                {
-                    if (item.ToString().Equals(Request.Form["SortCriteria"]))
-                    {
-                        result.SortCriteria = (SortCriteria) item;
-                    }
-                }
+                result.SortCriteria = (SortCriteria) sortCriteria;
             }
 
-            if (Request.Form["LogState"] != null)
+            if (logState != null)
             {
-                foreach (var item in Enum.GetValues(typeof(LogState)))
-                {
-                    if (item.ToString().Equals(Request.Form["LogState"]))
-                    {
-                        result.SortCriteria = (SortCriteria)item;
-                    }
-                }
+                result.CurrentState = logState;
             }
-
+            result.Sort(facade.GetLogGateway((LoggedInModel)Session["LoginModel"]).GetAll());
             return View(result);
         }
 

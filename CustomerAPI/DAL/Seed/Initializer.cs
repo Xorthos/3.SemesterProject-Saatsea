@@ -105,13 +105,13 @@ namespace DAL.Seed
             List<Employee> empList7 = new List<Employee>() { emp1, emp2, emp3, emp4, emp5 };
             List<Employee> empList8 = new List<Employee>() { emp16 };
 
-            context.Logs.Add(new Log() { Company = comp1, Employees = empList1, Date = DateTime.Now, Id = 1, Import = true, Active=true});
+            context.Logs.Add(new Log() { Company = comp1, Employees = empList1, Date = DateTime.Now.AddDays(-1), Id = 1, Import = true, Active=true});
             context.Logs.Add(new Log() { Company = comp2, Employees = empList2, Date = DateTime.Now, Id = 2, Import = true, Active = true });
-            context.Logs.Add(new Log() { Company = comp3, Employees = empList3, Date = DateTime.Now, Id = 3, Import = true, Active = true });
+            context.Logs.Add(new Log() { Company = comp3, Employees = empList3, Date = DateTime.Now.AddDays(-14), Id = 3, Import = true, Active = true });
             context.Logs.Add(new Log() { Company = comp3, Employees = empList4, Date = DateTime.Now, Id = 4, Import = true, Active = true });
             context.Logs.Add(new Log() { Company = comp1, Employees = empList5, Date = DateTime.Now, Id = 5, Import = true, Active = true });
-            context.Logs.Add(new Log() { Company = comp1, Employees = empList7, Date = DateTime.Now, Id = 7, Import = false, Active = true });
-            context.Logs.Add(new Log() { Company = comp3, Employees = empList8, Date = DateTime.Now, Id = 8, Import = true, Active = true });
+            context.Logs.Add(new Log() { Company = comp1, Employees = empList7, Date = DateTime.Now.AddDays(5), Id = 7, Import = false, Active = true });
+            context.Logs.Add(new Log() { Company = comp3, Employees = empList8, Date = DateTime.Now.AddDays(3), Id = 8, Import = true, Active = true });
 
             
             base.InitializeDatabase(context);

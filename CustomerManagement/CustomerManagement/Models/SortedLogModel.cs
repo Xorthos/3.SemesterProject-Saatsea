@@ -15,15 +15,14 @@ namespace CustomerManagement.Models
         public LogState? CurrentState { get; set;}
         public SortCriteria SortCriteria { get; set; }
 
-      public SortedLogModel(List<Log> logs)
+      public SortedLogModel()
       {
-          Logs = logs;
           SortCriteria = SortCriteria.Both;
-          Sort();
       }
 
-        private void Sort()
+        public void Sort(IEnumerable<Log> logs)
         {
+            Logs = (List<Log>)logs;
             FilterState();
             FilterCriteria();
         }
@@ -36,10 +35,10 @@ namespace CustomerManagement.Models
                     return;
                     break;
                 case SortCriteria.Export:
-                    Logs = (List<Log>)Logs.Where(c => !c.Import).ToList();
+                    Logs = Logs.Where(c => !c.Import).ToList();
                     break;
                 case SortCriteria.Import:
-                    Logs = (List<Log>)Logs.Where(c => c.Import).ToList();
+                    Logs = Logs.Where(c => c.Import).ToList();
                     break;
 
             }
@@ -48,13 +47,13 @@ namespace CustomerManagement.Models
 
         private void FilterState()
         {
-            if (typeof (LogState) == null)
+            if (CurrentState == null)
             {
                 return;
             }
             else
             {
-                Logs = (List<Log>) Logs.Where(c => c.LogState.Equals(typeof (LogState))).ToList();
+                Logs = (List<Log>) Logs.Where(c => c.LogState.Equals(CurrentState)).ToList();
             }
         }
     }
