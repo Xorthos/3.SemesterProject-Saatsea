@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using CustomerManagement.Attributes;
+using CustomerManagement.Models;
 using Proxy.Facade.Abstraction;
 using Proxy.Facade.Implementation;
 using Proxy.Models;
@@ -16,9 +17,21 @@ namespace CustomerManagement.Controllers
         
         IFacade facade = new Facade();
         [AuthorizeLogin]
-        public ActionResult Index()
+        public ActionResult Index(SortCriteria? sortCriteria, LogState? logState)
         {
-            return View(facade.GetLogGateway((LoggedInModel)Session["LoginModel"]).GetAll());
+            var result = new SortedLogModel();
+                
+            if (sortCriteria != null)
+            {
+                result.SortCriteria = (SortCriteria) sortCriteria;
+            }
+
+            if (logState != null)
+            {
+                result.CurrentState = logState;
+            }
+            result.Sort(facade.GetLogGateway((LoggedInModel)Session["LoginModel"]).GetAll());
+            return View(result);
         }
 
         [AuthorizeLogin]

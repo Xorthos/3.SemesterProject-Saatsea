@@ -1,54 +1,94 @@
-﻿@model IEnumerable<Proxy.Models.Log>
+﻿
+@using CustomerManagement.Models
+@model CustomerManagement.Models.SortedLogModel
 
-@{
-    ViewBag.Title = "Index";
-}
+    @{
+        ViewBag.Title = "Index";
+    }
 
 <h2>Logs</h2>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Company.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Employees.Count)
-        </th>
-        <th>
-            Import/Export
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Company.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Employees.Count)
-        </td>
-        <td>
-            @if (item.Import)
+<form method="GET" action="">
+    <select name="LogState">
+        @foreach (var item in Enum.GetValues(typeof(LogState)))
+        {
+            if (item.Equals(Model.CurrentState))
             {
-                <p>Import</p>
+                <option value=@item selected>@item</option>
             }
             else
             {
-                <p>Export</p>
+                <option value=@item>@item</option>
             }
+        }
+    </select>
 
-        </td>
-        <td>
-            @Html.ActionLink("Details", "LogDetails", new { id=item.ID })
-        </td>
-    </tr>
-}
+    <select name="SortCriteria">
+        @foreach (var item in Enum.GetValues(typeof(SortCriteria)))
+        {
+            if (item.Equals(Model.SortCriteria))
+            {
+                <option value=@item selected>@item</option>
+            }
+            else
+            {
+                <option value=@item>@item</option>
+            }
+        }
+    </select>
 
-</table>
+    <button type="submit">Reload</button>
+</form>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Logs[0].Company.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Logs[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Logs[0].Employees.Count)
+            </th>
+            @*<th>
+                @Html.DisplayFor(model => model.Logs[0].LogState)
+            </th>*@
+            <th>
+                Import/Export
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Logs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employees.Count)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.LogState)
+                </td>*@
+                <td>
+                    @if (item.Import)
+                {
+                        <p>Import</p>
+                    }
+                    else
+                    {
+                        <p>Export</p>
+                    }
+
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "LogDetails", new { id = item.ID })
+                </td>
+            </tr>
+        }
+
+    </table>
+

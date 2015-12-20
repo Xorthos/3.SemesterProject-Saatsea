@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CustomerManagement.Models;
 
 namespace Proxy.Models
 {
@@ -14,6 +15,7 @@ namespace Proxy.Models
         public bool Import { get; set; }
         public List<Employee> Employees  { get; set; }
         public bool Active { get; set; }
+      public LogState LogState { get; set; }
 
     }
 }

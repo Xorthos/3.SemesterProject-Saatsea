@@ -76,7 +76,6 @@ namespace CustomerAPI.Controllers
         }
         
         [HttpPost]
-        [AllowAnonymous]
         [MyBasicAuthenticationFilter]
         [Route("api/employee/import")]
         public HttpResponseMessage Import(IEnumerable<Employee> Employees)
