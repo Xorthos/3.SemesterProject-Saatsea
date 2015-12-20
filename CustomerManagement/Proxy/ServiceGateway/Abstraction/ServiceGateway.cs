@@ -10,7 +10,6 @@ namespace Proxy.ServiceGateway.Abstraction
     public abstract class ServiceGateway<T>
     {
         // this is here, because every class that now inheirits this class will have access to the endpoint.
-        //protected static readonly string END_POINT = "http://movieshopapi.azurewebsites.net/api/";
         public static readonly string END_POINT = "http://localhost:2687/api/";
         protected LoggedInModel _loggedInModel;
 
